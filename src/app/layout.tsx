@@ -8,6 +8,7 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import MenuBorder from "./components/globais/menuBorder";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useEffect, useState } from "react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,8 +26,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const pathname = usePathname();
+  const [currentPathname, setCurrentPathname] = useState<string | null>(null);
 
-  const showMenu = pathname !== "/login";
+  useEffect(() => {
+    setCurrentPathname(pathname);
+  }, [pathname]);
+
+  const showMenu = currentPathname !== "/login";
 
   return (
     <html lang="en">
