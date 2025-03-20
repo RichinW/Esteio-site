@@ -10,7 +10,7 @@ const FilterModalProduction = () => {
     activity: "",
     type: "",
     regional: "",
-    highway: ""
+    highway: "",
   });
 
   const handleDateChange = (value?: string) => {
@@ -20,10 +20,10 @@ const FilterModalProduction = () => {
     }));
   };
 
-  const handleAuditChange = (value?: number) => {
-    setProductionFillter((prevProduction) => ({
-      ...prevProduction,
-      audit: value || null,
+  const handleAuditChange = (value?: string) => {
+    setProductionFillter((prevFilter) => ({
+      ...prevFilter,
+      audit: value ? Number(value) : null,
     }));
   };
 
@@ -91,7 +91,7 @@ const FilterModalProduction = () => {
             <div className="flex w-full h-full flex-col items-center justify-start pt-4">
               <div className="flex flex-col items-center justify-start gap-10 w-full">
                 <div className="flex w-11/12 h-full justify-between items-center">
-                <div className="flex flex-col gap-2">
+                  <div className="flex flex-col gap-2">
                     <p className="pl-2">Data</p>
                     <InputText
                       width="80"
@@ -107,7 +107,11 @@ const FilterModalProduction = () => {
                       width="80"
                       placeholder="Auditoria"
                       type="text"
-                      input={productionFilter.audit}
+                      input={
+                        productionFilter.audit !== null
+                          ? String(productionFilter.audit)
+                          : ""
+                      }
                       setInput={handleAuditChange}
                     />
                   </div>{" "}
