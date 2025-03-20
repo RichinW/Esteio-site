@@ -3,10 +3,10 @@ import InputText from "../components/inputText";
 import { useState } from "react";
 import ButtonDefault from "../components/buttonDefault";
 import api, { setAuthToken, clearAuthToken } from "../services/api";
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 export default function Login() {
   const [isLoading, setIsLoading] = useState(false);

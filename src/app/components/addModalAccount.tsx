@@ -8,7 +8,7 @@ interface AddModalAccountProps {
   onAccountAdded: () => void;
 }
 
-const AddModalAccount:FC<AddModalAccountProps> = ({ onAccountAdded }) => {
+const AddModalAccount: FC<AddModalAccountProps> = ({ onAccountAdded }) => {
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(true);
   const [account, setAccounts] = useState<AccountIn>({
@@ -54,15 +54,26 @@ const AddModalAccount:FC<AddModalAccountProps> = ({ onAccountAdded }) => {
         password: account.password,
         confirm_password: account.confirm_password,
       });
+      setShowModal(false);
+      onAccountAdded();
+      clearInputs()
+      toast.success(`${response.data.message}`);
       setShowModal(false)
-      onAccountAdded()
-      toast.success(`${response.data.message}`)
       setLoading(false);
     } catch (err) {
-      toast.error("Erro ao cadastrar usuário. Tente novamente!")
+      toast.error("Erro ao cadastrar usuário. Tente novamente!");
       setLoading(false);
     }
   }
+
+  const clearInputs = () => {
+    setAccounts({
+      username: "",
+      email: "",
+      password: "",
+      confirm_password: "",
+    });
+  };
 
   return (
     <>
@@ -105,13 +116,13 @@ const AddModalAccount:FC<AddModalAccountProps> = ({ onAccountAdded }) => {
                 </div>
                 <div className="flex w-11/12 h-full justify-between items-center">
                   <div className="flex flex-col gap-2 w-full">
-                      <InputText
-                        width="full"
-                        placeholder="Email"
-                        type="text"
-                        input={account.email}
-                        setInput={handleEmailChange}
-                      />
+                    <InputText
+                      width="full"
+                      placeholder="Email"
+                      type="text"
+                      input={account.email}
+                      setInput={handleEmailChange}
+                    />
                   </div>
                 </div>
                 <div className="flex w-11/12 justify-between items-center">

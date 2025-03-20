@@ -101,6 +101,7 @@ const AddModalEmployee: FC<AddModalEmployeeProps> = ({ onEmployeeAdded }) => {
     try {
       const response = await api.post("/employee/cadastrofuncionario", body)
       onEmployeeAdded();
+      clearInputs()
       setShowModal(false)
       toast.success(response.data.message)
     } catch (err) {

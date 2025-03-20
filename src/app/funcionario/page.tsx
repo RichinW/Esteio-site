@@ -17,7 +17,7 @@ export default function Funcionario() {
   const pageEnd = 7 * page;
   const [totalPage, setTotalPage] = useState<number>(1);
   const handleAddEmployee = () => {
-    listEmployees()
+    listEmployees();
   };
 
   useEffect(() => {
@@ -34,8 +34,11 @@ export default function Funcionario() {
 
   async function listEmployees() {
     try {
-      const response = await api.get(`/employee/listafuncionario/${pageStart}/${pageEnd}`);
+      const response = await api.get(
+        `/employee/listafuncionario/${pageStart}/${pageEnd}`
+      );
       setEmployees(response.data.employees);
+      setTotalPage(Math.ceil(response.data.total_items / 7));
       setLoading(false);
     } catch (err) {
       setLoading(false);
@@ -199,14 +202,22 @@ export default function Funcionario() {
                         <div className="w-[4%] flex items-center">
                           {employee.id}
                         </div>
-                        <div className="w-[9%] flex items-center">
+                        <div
+                          className={`w-[9%] flex items-center ${
+                            view === employee.id ? "" : "truncate"
+                          }`}
+                        >
                           {employee.name}
                         </div>
                         <div className="w-[10%] flex items-center">
                           {(() => {
-                            const date = new Date(employee.date_of_birth);
+                            const date = new Date(
+                              employee.date_of_birth + "T00:00:00"
+                            );
                             return !isNaN(date.getTime())
-                              ? date.toLocaleDateString()
+                              ? date.toLocaleDateString("pt-BR", {
+                                  timeZone: "America/Sao_Paulo",
+                                })
                               : "Data inválida";
                           })()}
                         </div>

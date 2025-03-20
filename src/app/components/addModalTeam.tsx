@@ -38,15 +38,6 @@ const AddModalTeam: FC<AddModalTeamProps> = ({ onTeamAdded }) => {
     }));
   };
 
-  function formattedDateFunction(date: Date) {
-    const day = String(date.getDate()).padStart(2, "0");
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const year = date.getFullYear();
-    const formattedDate = `${day}/${month}/${year}`;
-    console.log(formattedDate);
-    return formattedDate;
-  }
-
   useEffect(() => {
     listEmployees();
   }, []);
@@ -74,6 +65,7 @@ const AddModalTeam: FC<AddModalTeamProps> = ({ onTeamAdded }) => {
     try {
       const response = await api.post("/team/cadastrotime", body);
       onTeamAdded();
+      clearInputs()
       setShowModal(false)
       toast.success(response.data.message);
     } catch (err) {

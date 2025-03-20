@@ -38,6 +38,7 @@ export default function Missao() {
         `/mission/listamissao/${pageStart}/${pageEnd}`
       );
       setMissions(response.data.missions);
+      setTotalPage(Math.ceil(response.data.total_items / 7));
       setLoading(false);
     } catch (err) {
       setLoading(false);
@@ -251,7 +252,9 @@ export default function Missao() {
                             {(() => {
                               const date = new Date(mission.start_date);
                               return !isNaN(date.getTime())
-                                ? date.toLocaleDateString()
+                                ? date.toLocaleDateString("pt-BR", {
+                                    timeZone: "America/Sao_Paulo",
+                                  })
                                 : "Data inválida";
                             })()}{" "}
                           </div>
@@ -259,7 +262,9 @@ export default function Missao() {
                             {(() => {
                               const date = new Date(mission.end_date);
                               return !isNaN(date.getTime())
-                                ? date.toLocaleDateString()
+                                ? date.toLocaleDateString("pt-BR", {
+                                    timeZone: "America/Sao_Paulo",
+                                  })
                                 : "Data inválida";
                             })()}
                           </div>

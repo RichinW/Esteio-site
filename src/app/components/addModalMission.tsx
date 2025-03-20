@@ -167,6 +167,7 @@ const AddModalMission: FC<AddModalMissionProps> = ({ onMissionAdded }) => {
     try {
       const response = await api.post("/mission/cadastromissao", body);
       onMissionAdded();
+      clearInputs()
       setShowModal(false);
       toast.success(response.data.message);
     } catch (err) {

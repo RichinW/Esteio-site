@@ -42,6 +42,7 @@ export default function Usuario() {
     try {
       const response = await api.get(`/account/listausuario/${pageStart}/${pageEnd}`);
       setAccounts(response.data.accounts);
+      setTotalPage(Math.ceil(response.data.total_items / 7));
       setLoading(false);
     } catch (err) {
       setLoading(false);
@@ -276,11 +277,17 @@ export default function Usuario() {
               <div className="flex items-center gap-6 font-semibold text-gray-400">
                 <i className="fa-solid fa-angles-left"></i>
                 <i className="fa-solid fa-angle-left"></i>
-                <p>1</p>
-                <p>2</p>
-                <p>3</p>
-                <p>...</p>
-                <p>10</p>
+                {Array.from({ length: totalPage }, (_, index) => (
+                  <button
+                    key={index + 1}
+                    className={`px-2 ${
+                      index + 1 === page ? "text-blue-400 underline" : ""
+                    }`}
+                    onClick={() => setPage(index + 1)}
+                  >
+                    {index + 1}
+                  </button>
+                ))}
                 <i className="fa-solid fa-angle-right"></i>
                 <i className="fa-solid fa-angles-right"></i>
               </div>

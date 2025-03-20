@@ -9,6 +9,10 @@ export default function SVertical() {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
   const [view, setView] = useState(0);
+  const [page, setPage] = useState(1);
+  const pageStart = 7 * (page - 1);
+  const pageEnd = 7 * page;
+  const [totalPage, setTotalPage] = useState<number>(1);
 
   useEffect(() => {
     const checkToken = async () => {
@@ -26,6 +30,7 @@ export default function SVertical() {
     try {
       const response = await api.get("/production/listasv");
       setVertical(response.data.productions);
+      setTotalPage(Math.ceil(response.data.total_items / 7));
       setLoading(false);
     } catch (err) {
       setLoading(false);

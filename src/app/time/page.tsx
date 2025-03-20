@@ -5,6 +5,7 @@ import { PermissionOut } from "@/type/permissionType";
 import AddModalTeam from "../components/addModalTeam";
 import { useRouter } from "next/navigation";
 import api, { verifyToken, getMe } from "@/app/services/api";
+import { toast } from "react-toastify";
 
 export default function Time() {
   const [teams, setTeams] = useState<TeamOut[]>([]);
@@ -50,9 +51,7 @@ export default function Time() {
 
   const toggleTeam = (newTeam: TeamOut) => {
     setSelectedTeam((prevState) => {
-      const isSelected = prevState.find(
-        (team) => team.id === newTeam.id
-      );
+      const isSelected = prevState.find((team) => team.id === newTeam.id);
 
       if (isSelected) {
         return prevState.filter((team) => team.id !== newTeam.id);
@@ -70,6 +69,24 @@ export default function Time() {
         return allTeams;
       }
     });
+  };
+
+  const deleteTeam = async () => {
+    if (selectedTeam.length <= 0) {
+      toast.info("Selecione algum item para deletar");
+    } else {
+      try {
+        for (const team of selectedTeam) {
+          await api.delete(`/team/deletetime/${team.id}`);
+        }
+
+        setSelectedTeam([]);
+        listTeams();
+        toast.success("Times excluídos com sucesso!");
+      } catch (error) {
+        toast.error("Erro ao tentar deletar os times");
+      }
+    }
   };
 
   const isAllSelected = () => {
@@ -113,7 +130,10 @@ export default function Time() {
                   {selectedTeam.length} Selected
                 </p>
               </div>
-              <div className="flex justify-between gap-2 items-center text-lg cursor-pointer">
+              <div
+                className="flex justify-between gap-2 items-center text-lg cursor-pointer"
+                onClick={() => deleteTeam()}
+              >
                 <i className="fa-regular fa-trash-can text-blue-400"></i>
                 <p className="text-gray-400">Deletar</p>
               </div>
@@ -214,17 +234,27 @@ export default function Time() {
                         <div className="w-[4%] flex items-center">
                           {team.id}
                         </div>
-                        <div className="w-[15%] flex items-center">
+                        <div
+                          className={`w-[15%] flex items-center ${
+                            view === team.id ? "" : "truncate"
+                          }`}
+                        >
                           {team.employee_one.name}
                         </div>
-                        <div className="w-[15%] flex items-center">
+                        <div
+                          className={`w-[15%] flex items-center ${
+                            view === team.id ? "" : "truncate"
+                          }`}
+                        >
                           {team.employee_two?.name}
                         </div>
                         <div className="w-[15%] flex items-center">
-                        {(() => {
+                          {(() => {
                             const date = new Date(team.date_register);
                             return !isNaN(date.getTime())
-                              ? date.toLocaleDateString()
+                              ? date.toLocaleDateString("pt-BR", {
+                                  timeZone: "America/Sao_Paulo",
+                                })
                               : "Data inválida";
                           })()}
                         </div>

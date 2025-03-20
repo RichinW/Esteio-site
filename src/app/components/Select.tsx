@@ -3,11 +3,8 @@ import { FC, useState } from "react";
 import Select from "react-select";
 
 const SelectDefault: FC<SelectDefaultProps> = ({ options, placeholder, value, onChange }) => {
-  const [selectedOption, setSelectedOption] = useState(null);
+  const selectedOption = options.find((option) => option.value === value) || null;
 
-  const handleChange = (selected: any) => {
-    setSelectedOption(selected);
-  };
 
   const customStyles = {
     control: (base: any) => ({
@@ -35,10 +32,12 @@ const SelectDefault: FC<SelectDefaultProps> = ({ options, placeholder, value, on
       <Select
         className="bg-gray-100"
         options={options}
-        value={value}
-        onChange={onChange}
+        value={selectedOption} // Define o objeto completo para exibir o label corretamente
+        onChange={(selected) => onChange(selected)} // Retorna o objeto inteiro
         styles={customStyles}
         placeholder={placeholder}
+        getOptionLabel={(e) => e.label} // Garante que o label seja exibido corretamente
+        getOptionValue={(e) => e.value} // Def // Define que o value seja o id
       />
     </div>
   );

@@ -45,7 +45,6 @@ export default function Producao() {
         `/production/listaproducao/${pageStart}/${pageEnd}`
       );
       setProductions(response.data.productions);
-      setTotalItems(response.data.total_items);
       setTotalPage(Math.ceil(response.data.total_items / 7));
       setLoading(false);
     } catch (err) {
@@ -241,7 +240,9 @@ export default function Producao() {
                           {(() => {
                             const date = new Date(production.date);
                             return !isNaN(date.getTime())
-                              ? date.toLocaleDateString()
+                              ? date.toLocaleDateString("pt-BR", {
+                                  timeZone: "America/Sao_Paulo",
+                                })
                               : "Data inválida";
                           })()}
                         </div>
