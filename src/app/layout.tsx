@@ -1,6 +1,7 @@
 // src/app/layout.tsx
 "use client";
-import { useRouter } from "next/router"; 
+
+import { usePathname } from "next/navigation";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
@@ -24,8 +25,15 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const router = useRouter(); // Usando o useRouter para acessar o pathname
-  const showMenu = router.pathname !== "/login"
+  const pathname = usePathname();
+  const [currentPathname, setCurrentPathname] = useState<string | null>(null);
+
+  useEffect(() => {
+    setCurrentPathname(pathname);
+    console.log(pathname); 
+  }, [pathname]);
+
+  const showMenu = currentPathname !== "/login/";
 
   return (
     <html lang="en">
