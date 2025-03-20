@@ -30,6 +30,7 @@ export default function RootLayout({
 
   useEffect(() => {
     setCurrentPathname(pathname);
+    console.log(pathname); 
   }, [pathname]);
 
   const showMenu = currentPathname !== "/login";
