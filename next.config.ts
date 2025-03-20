@@ -1,11 +1,9 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
-  output: "export", 
-  trailingSlash: true, 
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  trailingSlash: true,
   images: {
-    unoptimized: true, 
+    unoptimized: true,
   },
 };
 
-export default nextConfig;
+module.exports = nextConfig;
