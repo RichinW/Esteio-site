@@ -1,4 +1,3 @@
-import { AddModalProps, Diario } from "@/type/types";
 import { useState } from "react";
 
 const VerificationModal = () => {
