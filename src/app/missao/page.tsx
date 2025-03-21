@@ -126,8 +126,10 @@ export default function Missao() {
                   {selectedMission.length} Selected
                 </p>
               </div>
-              <div className="flex justify-between gap-2 items-center text-lg cursor-pointer"
-              onClick={() => deleteMission()}>
+              <div
+                className="flex justify-between gap-2 items-center text-lg cursor-pointer"
+                onClick={() => deleteMission()}
+              >
                 <i className="fa-regular fa-trash-can text-blue-400"></i>
                 <p className="text-gray-400">Deletar</p>
               </div>
@@ -192,7 +194,7 @@ export default function Missao() {
                 <div className="w-[4%] flex items-center"></div>
               </div>
               {!loading ? (
-                missions.length > 0 ? (
+                missions && missions.length > 0 ? (
                   missions.map((mission) => (
                     <div
                       className={`w-full ${
@@ -233,7 +235,9 @@ export default function Missao() {
                           {mission.audit}
                         </div>
                         <div className="w-[9%] flex items-center">
-                          {mission.regional.name}
+                          {mission.regional
+                            ? mission.regional.name
+                            : "Sem regional"}
                         </div>
                         <div className="w-[4%] flex items-center">
                           {mission.active}
