@@ -106,10 +106,7 @@ export default function Time() {
         </div>
         <div className="w-full h-full bg-gray-100 flex flex-col justify-center items-center gap-6">
           <div className="w-10/12 flex justify-end items-center px-10">
-            {permissions &&
-              permissions.some((permission) => permission.name === "adm") && (
-                <AddModalTeam onTeamAdded={handleAddTeam} />
-              )}
+            <AddModalTeam onTeamAdded={handleAddTeam} />
           </div>
           <div className="w-10/12 flex justify-between px-10">
             <div className="flex items-center justify-center gap-8">
