@@ -3,7 +3,7 @@ import { EmployeeOut } from "./employeeType";
 export interface TeamOut {
     id: number;
     employee_one: EmployeeOut;
-    employee_two: EmployeeOut;
+    employee_two?: EmployeeOut;
     date_register: string
   }
   

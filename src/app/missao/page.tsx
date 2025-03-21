@@ -270,7 +270,7 @@ export default function Missao() {
                           <div className="w-[4%] flex items-center"></div>
                           <div className="w-[14%] flex items-center">
                             {mission.team.employee_one.name} /{" "}
-                            {mission.team.employee_two.name}
+                            {mission.team.employee_two?.name }
                           </div>
                           <div className="w-[10%] flex items-center">
                             {(() => {

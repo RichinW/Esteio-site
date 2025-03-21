@@ -327,7 +327,7 @@ export default function Producao() {
                           </div>
                           <div className="w-[9%] flex items-center">
                             {production.mission.team.employee_one.name} /{" "}
-                            {production.mission.team.employee_two.name}{" "}
+                            {production.mission.team.employee_two?.name || ""}{" "}
                           </div>
                           <div className="w-[9%] flex items-center">
                             {production.observation}
