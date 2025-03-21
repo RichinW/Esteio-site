@@ -5,6 +5,7 @@ import { PermissionOut } from "@/type/permissionType";
 import AddModalAccount from "../components/addModalAccount";
 import api, { verifyToken, getMe } from "../services/api";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 export default function Usuario() {
   const [accounts, setAccounts] = useState<AccountOut[]>([]);
@@ -48,6 +49,24 @@ export default function Usuario() {
       setLoading(false);
     }
   }
+
+  const deleteAccount = async () => {
+      if (selectedAccount.length <= 0) {
+        toast.info("Selecione algum item para deletar");
+      } else {
+        try {
+          for (const account of selectedAccount) {
+            await api.delete(`/account/deleteusuario/${account.id}`);
+          }
+  
+          setSelectedAccount([]);
+          listAccounts();
+          toast.success("Usuários excluídos com sucesso!");
+        } catch (error) {
+          toast.error("Erro ao tentar deletar os usuários");
+        }
+      }
+    };
 
   const toggleAccount = (newAccount: AccountOut) => {
     setSelectedAccount((prevState) => {
@@ -114,7 +133,8 @@ export default function Usuario() {
                   {selectedAccount.length} Selected
                 </p>
               </div>
-              <div className="flex justify-between gap-2 items-center text-lg cursor-pointer">
+              <div className="flex justify-between gap-2 items-center text-lg cursor-pointer"
+              onClick={() => deleteAccount()}>
                 <i className="fa-regular fa-trash-can text-blue-400"></i>
                 <p className="text-gray-400">Deletar</p>
               </div>

@@ -4,6 +4,7 @@ import AddModalEmployee from "../components/addModalEmployee";
 import { EmployeeOut } from "@/type/employeeType";
 import api, { verifyToken } from "../services/api";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 export default function Funcionario() {
   const [loading, setLoading] = useState(true);
@@ -44,6 +45,24 @@ export default function Funcionario() {
       setLoading(false);
     }
   }
+
+  const deleteEmployee = async () => {
+    if (selectedEmployee.length <= 0) {
+      toast.info("Selecione algum item para deletar");
+    } else {
+      try {
+        for (const employee of selectedEmployee) {
+          await api.delete(`/employee/deletefuncionario/${employee.id}`);
+        }
+
+        setSelectedEmployee([]);
+        listEmployees();
+        toast.success("Funcionários excluídos com sucesso!");
+      } catch (error) {
+        toast.error("Erro ao tentar deletar os funcionários");
+      }
+    }
+  };
 
   const toggleEmployee = (newEmployee: EmployeeOut) => {
     setSelectedEmployee((prevState) => {

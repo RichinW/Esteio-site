@@ -6,6 +6,7 @@ import api, { verifyToken, getMe } from "../services/api";
 import { useRouter } from "next/navigation";
 import EditModalProduction from "../components/editModalProduction";
 import FilterModalProduction from "../components/filterModalProduction";
+import { toast } from "react-toastify";
 
 export default function Producao() {
   const [productions, setProductions] = useState<ProductionOut[]>([]);
@@ -51,6 +52,24 @@ export default function Producao() {
       setLoading(false);
     }
   }
+
+  const deleteProduction = async () => {
+    if (selectedProduction.length <= 0) {
+      toast.info("Selecione algum item para deletar");
+    } else {
+      try {
+        for (const production of selectedProduction) {
+          await api.delete(`/production/deleteproducao/${production.id}`);
+        }
+
+        setSelectedProduction([]);
+        listProductions();
+        toast.success("Produções excluídas com sucesso!");
+      } catch (error) {
+        toast.error("Erro ao tentar deletar as produções");
+      }
+    }
+  };
 
   const toggleProduction = (newProduction: ProductionOut) => {
     setSelectedProduction((prevState) => {
@@ -122,7 +141,8 @@ export default function Producao() {
                   {selectedProduction.length} Selected
                 </p>
               </div>
-              <div className="flex justify-between gap-2 items-center text-lg cursor-pointer">
+              <div className="flex justify-between gap-2 items-center text-lg cursor-pointer"
+              onClick={() => deleteProduction()}>
                 <i className="fa-regular fa-trash-can text-blue-400"></i>
                 <p className="text-gray-400">Deletar</p>
               </div>

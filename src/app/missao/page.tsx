@@ -4,6 +4,7 @@ import AddModalMission from "../components/addModalMission";
 import { MissionOut } from "@/type/missionType";
 import api, { verifyToken } from "../services/api";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 export default function Missao() {
   const [loading, setLoading] = useState(true);
@@ -44,6 +45,24 @@ export default function Missao() {
       setLoading(false);
     }
   }
+
+  const deleteMission = async () => {
+    if (selectedMission.length <= 0) {
+      toast.info("Selecione algum item para deletar");
+    } else {
+      try {
+        for (const mission of selectedMission) {
+          await api.delete(`/mission/deletemissao/${mission.id}`);
+        }
+
+        setSelectedMission([]);
+        listMissions();
+        toast.success("Missões excluídas com sucesso!");
+      } catch (error) {
+        toast.error("Erro ao tentar deletar as missões");
+      }
+    }
+  };
 
   const toggleMission = (newMission: MissionOut) => {
     setSelectedMission((prevState) => {
@@ -107,7 +126,8 @@ export default function Missao() {
                   {selectedMission.length} Selected
                 </p>
               </div>
-              <div className="flex justify-between gap-2 items-center text-lg cursor-pointer">
+              <div className="flex justify-between gap-2 items-center text-lg cursor-pointer"
+              onClick={() => deleteMission()}>
                 <i className="fa-regular fa-trash-can text-blue-400"></i>
                 <p className="text-gray-400">Deletar</p>
               </div>
