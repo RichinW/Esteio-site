@@ -6,7 +6,7 @@ export interface RegionalOut {
   observation: string;
   km_start: number;
   km_end: number;
-  highways: HighwayOut[];
+  highways?: HighwayOut[];
 }
 
 export interface RegionalIn {

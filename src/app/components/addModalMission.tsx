@@ -127,7 +127,7 @@ const AddModalMission: FC<AddModalMissionProps> = ({ onMissionAdded }) => {
 
   const optionsTeam = teams.map((team) => ({
     value: team.id,
-    label: `${team.employee_one.name} / ${team.employee_two.name}`,
+    label: `${team.employee_one.name} / ${team.employee_two?.name}`,
   }));
 
   async function listRegionals() {
