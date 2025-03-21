@@ -63,13 +63,16 @@ const AddModalTeam: FC<AddModalTeamProps> = ({ onTeamAdded }) => {
       id_employee_two: team.employee_two,
     };
     try {
+      setLoading(true)
       const response = await api.post("/team/cadastrotime", body);
       onTeamAdded();
       clearInputs()
       setShowModal(false)
       toast.success(response.data.message);
+      setLoading(false)
     } catch (err) {
       toast.error("Erro ao cadastrar funcionário. Tente novamente!");
+      setLoading(false)
     }
   }
 
@@ -132,6 +135,7 @@ const AddModalTeam: FC<AddModalTeamProps> = ({ onTeamAdded }) => {
                 className="border-none bg-blue-500 text-xl font-light flex justify-center items-center text-white rounded-lg w-32 h-12 hover:bg-blue-600 transition-all cursor-pointer"
                 type="submit"
                 value="Adicionar"
+                disabled={loading}
                 onClick={() => addTeam()}
               />
             </div>

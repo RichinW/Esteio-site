@@ -6,7 +6,8 @@ const ButtonDefault: FC<ButtonDefaultProps> = ({
   icone,
   bgColor,
   color,
-  onClick
+  onClick,
+  disabled
 }) => {
   return (
     <div

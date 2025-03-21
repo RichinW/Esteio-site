@@ -1,5 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import api, { getMe, verifyToken, clearAuthToken } from "../../services/api";
 import { useEffect, useState } from "react";
 import { PermissionOut } from "@/type/permissionType";
@@ -7,16 +8,20 @@ import { PermissionOut } from "@/type/permissionType";
 const MenuBorder = () => {
   const router = useRouter();
   const [permissions, setPermissions] = useState<PermissionOut[]>([]);
+  const pathname = usePathname();
+
   useEffect(() => {
-    const checkToken = async () => {
-      await verifyToken(router.push);
-    };
-    const get = async () => {
-      const response = await getMe();
-      setPermissions(response?.data.employee.account.permissions);
-    };
-    checkToken();
-    get();
+    if (pathname !== "/login/") {
+      const checkToken = async () => {
+        await verifyToken(router.push);
+      };
+      const get = async () => {
+        const response = await getMe();
+        setPermissions(response?.data.employee.account.permissions);
+      };
+      checkToken();
+      get();
+    }
   }, [router]);
   const rounter = useRouter();
   return (

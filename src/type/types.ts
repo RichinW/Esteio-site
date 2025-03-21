@@ -12,6 +12,7 @@ export interface InputTextProps {
 export interface ButtonDefaultProps {
   text: string;
   icone?: string;
+  disabled?: boolean,
   bgColor: string;
   color?: string;
   onClick: () => void;

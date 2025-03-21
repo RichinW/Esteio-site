@@ -9,7 +9,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 export default function Login() {
-  const [isLoading, setIsLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [viewPassword, setViewPassword] = useState(false);
@@ -17,7 +17,7 @@ export default function Login() {
 
   const login = async () => {
     if (password && username) {
-      setIsLoading(true);
+      setLoading(true);
       const body = {
         username: username,
         password: password,
@@ -48,7 +48,7 @@ export default function Login() {
           toast.error("Erro desconhecido");
         }
       } finally {
-        setIsLoading(false);
+        setLoading(false);
       }
     } else {
       if (!username) toast.error("Coloque um nome de usuário válida!");
@@ -61,12 +61,12 @@ export default function Login() {
       <div className="w-2/6 h-3/5 bg-white shadow-gray-300 shadow-xl rounded-lg flex flex-col items-center justify-evenly">
         <div
           className={`logo-container relative w-24 h-24 bg-white ${
-            !isLoading ? "shadow-md shadow-gray-300" : ""
+            !loading ? "shadow-md shadow-gray-300" : ""
           } rounded-full flex justify-center items-center`}
         >
           <div
             className={`absolute inset-0 rounded-full flex justify-end items-center ${
-              isLoading
+              loading
                 ? "rotating border-blue-500 border-4 border-t-white"
                 : ""
             }`}
@@ -97,6 +97,7 @@ export default function Login() {
             bgColor="bg-blue-400"
             color="text-white"
             onClick={login}
+            disabled={loading}
           />
           <p className="text-gray-400 underline">Esqueci minha senha</p>
         </div>

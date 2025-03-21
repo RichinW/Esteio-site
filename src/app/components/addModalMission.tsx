@@ -165,13 +165,16 @@ const AddModalMission: FC<AddModalMissionProps> = ({ onMissionAdded }) => {
       id_team: mission.id_team,
     };
     try {
+      setLoading(true)
       const response = await api.post("/mission/cadastromissao", body);
       onMissionAdded();
       clearInputs()
       setShowModal(false);
       toast.success(response.data.message);
+      setLoading(false)
     } catch (err) {
       toast.error("Erro ao cadastrar missão. Tente novamente!");
+      setLoading(false)
     }
   }
 
@@ -337,6 +340,7 @@ const AddModalMission: FC<AddModalMissionProps> = ({ onMissionAdded }) => {
                 className="border-none bg-blue-500 text-xl font-light flex justify-center items-center text-white rounded-lg w-32 h-12 hover:bg-blue-600 transition-all cursor-pointer"
                 type="submit"
                 value="Adicionar"
+                disabled={loading}
                 onClick={() => addMission()}
               />
             </div>

@@ -10,7 +10,7 @@ interface AddModalAccountProps {
 
 const AddModalAccount: FC<AddModalAccountProps> = ({ onAccountAdded }) => {
   const [showModal, setShowModal] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [account, setAccounts] = useState<AccountIn>({
     username: "",
     email: "",
@@ -48,17 +48,17 @@ const AddModalAccount: FC<AddModalAccountProps> = ({ onAccountAdded }) => {
 
   async function addAccount() {
     try {
+      setLoading(true);
       const response = await api.post("/account/cadastrousuario", {
         username: account.username,
         email: account.email,
         password: account.password,
         confirm_password: account.confirm_password,
       });
-      setShowModal(false);
       onAccountAdded();
-      clearInputs()
+      clearInputs();
       toast.success(`${response.data.message}`);
-      setShowModal(false)
+      setShowModal(false);
       setLoading(false);
     } catch (err) {
       toast.error("Erro ao cadastrar usuário. Tente novamente!");
@@ -152,6 +152,7 @@ const AddModalAccount: FC<AddModalAccountProps> = ({ onAccountAdded }) => {
                 className="border-none bg-blue-500 text-xl font-light flex justify-center items-center text-white rounded-lg w-32 h-12 hover:bg-blue-600 transition-all cursor-pointer"
                 type="submit"
                 value="Adicionar"
+                disabled={loading}
                 onClick={() => addAccount()}
               />
             </div>

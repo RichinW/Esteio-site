@@ -99,13 +99,16 @@ const AddModalEmployee: FC<AddModalEmployeeProps> = ({ onEmployeeAdded }) => {
       id_account: employee.id_account
     }
     try {
+      setLoading(true)
       const response = await api.post("/employee/cadastrofuncionario", body)
       onEmployeeAdded();
       clearInputs()
       setShowModal(false)
       toast.success(response.data.message)
+      setLoading(false)
     } catch (err) {
       toast.error("Erro ao cadastrar funcionário. Tente novamente!")
+      setLoading(false)
     }
   }
 
@@ -221,6 +224,7 @@ const AddModalEmployee: FC<AddModalEmployeeProps> = ({ onEmployeeAdded }) => {
                 className="border-none bg-blue-500 text-xl font-light flex justify-center items-center text-white rounded-lg w-32 h-12 hover:bg-blue-600 transition-all cursor-pointer"
                 type="submit"
                 value="Adicionar"
+                disabled={loading}
                 onClick={() => addEmployee()}
               />
             </div>
