@@ -12,15 +12,19 @@ const MenuBorder = () => {
 
   useEffect(() => {
     if (pathname !== "/login/") {
-      const checkToken = async () => {
-        await verifyToken(router.push);
+      const checkAndFetch = async () => {
+        try {
+          await verifyToken(router.push); 
+          const response = await getMe(); 
+          setPermissions(response?.data.employee.account.permissions);
+        } catch (error: any) {
+          if (error.response?.status !== 401) {
+            console.error("Erro inesperado ao verificar o token:", error);
+          }
+        }
       };
-      const get = async () => {
-        const response = await getMe();
-        setPermissions(response?.data.employee.account.permissions);
-      };
-      checkToken();
-      get();
+
+      checkAndFetch();
     }
   }, [router]);
   const rounter = useRouter();
