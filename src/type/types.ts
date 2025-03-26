@@ -32,4 +32,5 @@ export interface SelectDefaultProps {
   placeholder?: string
   value?: string | number | null
   onChange: any
+  width: string
 }

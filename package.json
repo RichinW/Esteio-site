@@ -14,7 +14,7 @@
     "axios": "^1.7.9",
     "bootstrap": "^5.3.3",
     "esteio_site": "file:",
-    "next": "15.1.7",
+    "next": "^15.2.4",
     "react": "^19.0.0",
     "react-bootstrap": "^2.10.9",
     "react-date-range": "^2.0.1",

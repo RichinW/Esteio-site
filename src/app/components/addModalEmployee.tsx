@@ -7,8 +7,8 @@ import api from "../services/api";
 import { toast } from "react-toastify";
 
 interface Options {
-  label: string
-  value: number
+  label: string;
+  value: number;
 }
 
 interface AddModalEmployeeProps {
@@ -19,13 +19,13 @@ const AddModalEmployee: FC<AddModalEmployeeProps> = ({ onEmployeeAdded }) => {
   const [showModal, setShowModal] = useState(false);
   const [employee, setEmployee] = useState<EmployeeIn>({
     name: "",
-    date_of_birth: '',
+    date_of_birth: "",
     cpf: "",
     phone: "",
     phone_contact: "",
-    id_account: null
+    id_account: null,
   });
-  const [accounts, setAcconts] = useState<AccountOut[]>([])
+  const [accounts, setAcconts] = useState<AccountOut[]>([]);
   const [loading, setLoading] = useState(true);
 
   const handleNameChange = (value?: string) => {
@@ -65,18 +65,18 @@ const AddModalEmployee: FC<AddModalEmployeeProps> = ({ onEmployeeAdded }) => {
 
   const handleAccountChange = (value?: Options) => {
     setEmployee((prevEmployee) => ({
-      ...prevEmployee, 
-      id_account: value?.value || null
+      ...prevEmployee,
+      id_account: value?.value || null,
     }));
   };
 
   useEffect(() => {
-    listAccounts()
-  }, [])
+    listAccounts();
+  }, []);
 
-  const options = accounts.map(account => ({
+  const options = accounts.map((account) => ({
     value: account.id,
-    label: account.username 
+    label: account.username,
   }));
 
   async function listAccounts() {
@@ -96,19 +96,19 @@ const AddModalEmployee: FC<AddModalEmployeeProps> = ({ onEmployeeAdded }) => {
       cpf: employee.cpf,
       phone: employee.phone,
       phone_contact: employee.phone_contact,
-      id_account: employee.id_account
-    }
+      id_account: employee.id_account,
+    };
     try {
-      setLoading(true)
-      const response = await api.post("/employee/cadastrofuncionario", body)
+      setLoading(true);
+      const response = await api.post("/employee/cadastrofuncionario", body);
       onEmployeeAdded();
-      clearInputs()
-      setShowModal(false)
-      toast.success(response.data.message)
-      setLoading(false)
+      clearInputs();
+      setShowModal(false);
+      toast.success(response.data.message);
+      setLoading(false);
     } catch (err) {
-      toast.error("Erro ao cadastrar funcionário. Tente novamente!")
-      setLoading(false)
+      toast.error("Erro ao cadastrar funcionário. Tente novamente!");
+      setLoading(false);
     }
   }
 
@@ -119,8 +119,8 @@ const AddModalEmployee: FC<AddModalEmployeeProps> = ({ onEmployeeAdded }) => {
       cpf: "",
       phone: "",
       phone_contact: "",
-      id_account: null
-    })
+      id_account: null,
+    });
   }
 
   return (
@@ -145,12 +145,10 @@ const AddModalEmployee: FC<AddModalEmployeeProps> = ({ onEmployeeAdded }) => {
               <button className="text-gray-500 hover:text-gray-700">
                 <i
                   className="fas fa-times"
-                  onClick={() => 
-                    {
-                      setShowModal(false)
-                      clearInputs()
-                    } 
-                  }
+                  onClick={() => {
+                    setShowModal(false);
+                    clearInputs();
+                  }}
                 ></i>
               </button>
             </div>
@@ -210,13 +208,14 @@ const AddModalEmployee: FC<AddModalEmployeeProps> = ({ onEmployeeAdded }) => {
                   </div>
                 </div>
                 <div className="flex flex-col gap-2 w-full px-8 h-full">
-                    <SelectDefault
-                      options={options}
-                      value={employee.id_account}
-                      onChange={handleAccountChange}
-                      placeholder="Usuário"
-                    />
-                  </div>
+                  <SelectDefault
+                    options={options}
+                    value={employee.id_account}
+                    onChange={handleAccountChange}
+                    placeholder="Usuário"
+                    width="full"
+                  />
+                </div>
               </div>
             </div>
             <div className="w-full h-24 min-h-24 flex justify-end items-center p-2 border-t-2 border-gray-100 gap-4">

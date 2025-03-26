@@ -16,7 +16,7 @@ const DateRange = () => {
       <div className="flex justify-center items-center gap-2 shadow-[0px_0px_5px_rgba(0,0,0,0.15)] px-4 py-2 rounded-md">
         <i className="fa-solid fa-calendar text-gray-700 text-xl"></i>
         <p className="text-gray-700">Período</p>
-        <div className="bg-gray-300 py-1 px-2 flex justify-center items-center rounded-full gap-1">
+        <div className="bg-gray-200 py-1 px-2 flex justify-center items-center rounded-full gap-1">
         <DatePicker
             selected={startDate}
             onChange={handleDateChange}

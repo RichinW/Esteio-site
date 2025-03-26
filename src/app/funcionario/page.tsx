@@ -5,6 +5,7 @@ import { EmployeeOut } from "@/type/employeeType";
 import api, { verifyToken } from "../services/api";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+import InfoEmployeeModal from "../components/infoEmployeeModal";
 
 export default function Funcionario() {
   const [loading, setLoading] = useState(true);
@@ -189,6 +190,7 @@ export default function Funcionario() {
                   </div>
                 </div>
                 <div className="w-[4%] flex items-center"></div>
+                <div className="w-[4%] flex items-center"></div>
               </div>
               {!loading ? (
                 employees.length > 0 ? (
@@ -250,7 +252,9 @@ export default function Funcionario() {
                         <div className="w-[9%] flex items-center">
                           {employee.phone_contact}
                         </div>
-
+                        <div className="w-[4%] flex items-center text-xl">
+                          <InfoEmployeeModal/>
+                        </div>
                         <div
                           className="w-[4%] flex items-center text-xl"
                           // onClick={() => {

@@ -315,6 +315,7 @@ const AddModalMission: FC<AddModalMissionProps> = ({ onMissionAdded }) => {
                     value={mission.id_regional}
                     onChange={handleRegionalChange}
                     placeholder="Regional"
+                    width="full"
                   />
                 </div>
                 <div className="flex flex-col gap-2 w-full px-8 h-full">
@@ -323,6 +324,7 @@ const AddModalMission: FC<AddModalMissionProps> = ({ onMissionAdded }) => {
                     value={mission.id_team}
                     onChange={handleTeamChange}
                     placeholder="Time"
+                    width="full"
                   />
                 </div>
                 <div className="flex flex-col gap-2 w-full px-8 h-full">
