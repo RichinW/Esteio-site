@@ -1,7 +1,7 @@
 // src/app/layout.tsx
 "use client";
 
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
@@ -9,6 +9,8 @@ import MenuBorder from "./components/globais/menuBorder";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useEffect, useState } from "react";
+import { verifyToken } from "./services/api";
+import "@fontsource/rubik";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,10 +29,16 @@ export default function RootLayout({
 }>) {
   const pathname = usePathname();
   const [currentPathname, setCurrentPathname] = useState<string | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
+    if(pathname !== "/login/"){
+      const checkToken = async () => {
+        await verifyToken(router.push);
+      };
+      checkToken()
+    }
     setCurrentPathname(pathname);
-    console.log(pathname); 
   }, [pathname]);
 
   const showMenu = currentPathname !== "/login/";
@@ -38,7 +46,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased font-rubik`}
       >
         <div className="flex">
           {showMenu && <MenuBorder />}

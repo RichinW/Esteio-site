@@ -2,6 +2,8 @@
 export interface InputTextProps {
   placeholder: string;
   width: string;
+  height: string;
+  fontSize: string;
   icone?: string;
   input: string;
   type: string;
@@ -16,6 +18,9 @@ export interface ButtonDefaultProps {
   bgColor: string;
   color?: string;
   onClick: () => void;
+  width: string
+  height: string
+  fontSize: string
 }
 
 export interface FilterIn {
@@ -33,4 +38,6 @@ export interface SelectDefaultProps {
   value?: string | number | null
   onChange: any
   width: string
+  style?: string
+  height: string
 }

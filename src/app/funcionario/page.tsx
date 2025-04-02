@@ -23,10 +23,6 @@ export default function Funcionario() {
   };
 
   useEffect(() => {
-    const checkToken = async () => {
-      await verifyToken(router.push);
-    };
-    checkToken();
     listEmployees();
   }, [router]);
 
@@ -100,11 +96,12 @@ export default function Funcionario() {
   return (
     <div className="w-screen h-screen flex justify-center items-center">
       <div className="h-full w-full flex flex-col">
-        <div className="w-full h-24 bg-white flex justify-between items-center px-12 shadow-lg">
-          <p className="text-slate-700 font-semibold text-2xl">Funcionarios</p>
-          <div></div>
+        <div className="w-full 2xl:h-24 xl:h-16 bg-white flex justify-between items-center px-12 shadow-lg">
+          <p className="text-slate-700 font-semibold 2xl:text-2xl xl:xl">
+            Produção
+          </p>
         </div>
-        <div className="w-full h-full bg-gray-100 flex flex-col justify-center items-center gap-6">
+        <div className="w-full h-full bg-gray-100 flex flex-col justify-center items-center 2xl:gap-6 xl:gap-3">
           <div className="w-10/12 flex justify-end items-center px-10">
             <AddModalEmployee onEmployeeAdded={handleAddEmployee} />
           </div>
@@ -112,7 +109,7 @@ export default function Funcionario() {
             <div className="flex items-center justify-center gap-8">
               <div className="flex justify-between items-center gap-2">
                 <div
-                  className={`w-5 h-5 border-2 rounded-sm cursor-pointer flex items-center justify-center ${
+                  className={`2xl:w-5 xl:w-4 xl:h-4 2xl:h-5 border-2 rounded-sm cursor-pointer flex items-center justify-center ${
                     isAllSelected()
                       ? "bg-blue-400 border-blue-400"
                       : "border-gray-500"
@@ -120,24 +117,24 @@ export default function Funcionario() {
                   onClick={() => toggleAllEmployee(employees)}
                 >
                   {isAllSelected() && (
-                    <i className="fa-solid fa-check text-white text-sm"></i>
+                    <i className="fa-solid fa-check text-white 2xl:text-sm xl:text-xs"></i>
                   )}
                 </div>
-                <p className="text-gray-500 text-xl font-medium">
+                <p className="text-gray-500 2xl:text-xl xl:text-lg font-medium">
                   {selectedEmployee.length} Selected
                 </p>
               </div>
-              <div className="flex justify-between gap-2 items-center text-lg cursor-pointer">
+              <div className="flex justify-between gap-2 items-center 2xl:text-lg xl:text-base cursor-pointer">
                 <i className="fa-regular fa-trash-can text-blue-400"></i>
                 <p className="text-gray-400">Deletar</p>
               </div>
             </div>
             <div className="flex justify-between items-center gap-8">
-              <div className="flex justify-between items-center gap-2 text-lg cursor-pointer">
+              <div className="flex justify-between items-center gap-2 2xl:text-lg xl:text-base cursor-pointer">
                 <i className="fa-solid fa-filter text-blue-400"></i>
                 <p className="text-gray-400">Filtrar</p>
               </div>
-              <div className="flex justify-between items-center gap-2 text-lg cursor-pointer">
+              <div className="flex justify-between items-center gap-2 2xl:text-lg xl:text-base cursor-pointer">
                 <i className="fa-solid fa-arrow-down-wide-short text-blue-400"></i>
                 <p className="text-gray-400">Ordenar por</p>
               </div>
@@ -145,46 +142,46 @@ export default function Funcionario() {
           </div>
           <div className="w-10/12 h-4/5 bg-white rounded-lg flex flex-col justify-between px-10 shadow-gray-300 shadow-md">
             <div className="w-full h-full flex flex-col justify-start items-center">
-              <div className="w-full h-20 border-b-2 border-gray-100 flex justify-between items-center text-gray-700 font-bold text-lg">
+              <div className="w-full 2xl:h-20 xl:h-16 border-b-2 2xl:text-base xl:text-sm border-gray-100 flex justify-between items-center text-gray-700 font-bold text-lg">
                 <div className="w-[5.5%] flex items-center"></div>
                 <div className="w-[4%] flex items-center gap-2">
                   <p>ID</p>
-                  <div className="flex flex-col justify-center text-sm text-gray-300">
+                  <div className="flex flex-col justify-center text-gray-300">
                     <i className="fa-solid fa-caret-up"></i>
                     <i className="fa-solid fa-caret-down"></i>
                   </div>
                 </div>
                 <div className="w-[9%] flex items-center gap-2">
                   <p>Nome</p>
-                  <div className="flex flex-col justify-center text-sm text-gray-300">
+                  <div className="flex flex-col justify-center text-gray-300">
                     <i className="fa-solid fa-caret-up"></i>
                     <i className="fa-solid fa-caret-down"></i>
                   </div>
                 </div>
                 <div className="w-[9%] flex items-center gap-2">
-                  <p>Data de Nascimento</p>
-                  <div className="flex flex-col justify-center text-sm text-gray-300">
+                  <p>Nascimento</p>
+                  <div className="flex flex-col justify-center text-gray-300">
                     <i className="fa-solid fa-caret-up"></i>
                     <i className="fa-solid fa-caret-down"></i>
                   </div>
                 </div>
                 <div className="w-[9%] flex items-center gap-2">
                   <p>CPF</p>
-                  <div className="flex flex-col justify-center text-sm text-gray-300">
+                  <div className="flex flex-col justify-center text-gray-300">
                     <i className="fa-solid fa-caret-up"></i>
                     <i className="fa-solid fa-caret-down"></i>
                   </div>
                 </div>
                 <div className="w-[9%] flex items-center gap-2">
                   <p>Telefone</p>
-                  <div className="flex flex-col justify-center text-sm text-gray-300">
+                  <div className="flex flex-col justify-center text-gray-300">
                     <i className="fa-solid fa-caret-up"></i>
                     <i className="fa-solid fa-caret-down"></i>
                   </div>
                 </div>
                 <div className="w-[9%] flex items-center gap-2">
-                  <p>Telefone de Contato</p>
-                  <div className="flex flex-col justify-center text-sm text-gray-300">
+                  <p>Contato</p>
+                  <div className="flex flex-col justify-center text-gray-300">
                     <i className="fa-solid fa-caret-up"></i>
                     <i className="fa-solid fa-caret-down"></i>
                   </div>
@@ -199,13 +196,13 @@ export default function Funcionario() {
                       className={`w-full ${
                         view !== null
                           ? employee.id === view
-                            ? "h-40"
-                            : "h-12"
-                          : "h-16"
+                            ? "2xl:h-40 xl:h-36"
+                            : "2xl:h-12 xl:h-8"
+                          : "2xl:h-16 xl:h-12"
                       } border-b-2 border-gray-100 flex flex-col gap-3 justify-center items-center text-gray-400 text-lg transition-all`}
                       key={employee.id}
                     >
-                      <div className="flex w-full justify-between">
+                      <div className="flex w-full justify-between xl:text-sm 2xl:text-base">
                         <div className="w-[5.5%] flex items-center justify-center">
                           <div
                             onClick={() => toggleEmployee(employee)}
@@ -252,11 +249,11 @@ export default function Funcionario() {
                         <div className="w-[9%] flex items-center">
                           {employee.phone_contact}
                         </div>
-                        <div className="w-[4%] flex items-center text-xl">
-                          <InfoEmployeeModal/>
+                        <div className="w-[4%] flex items-center 2xl:text-xl xl:text-base">
+                          <InfoEmployeeModal />
                         </div>
                         <div
-                          className="w-[4%] flex items-center text-xl"
+                          className="w-[4%] flex items-center 2xl:text-xl xl:text-base"
                           // onClick={() => {
                           //   if (view === production.id) setView(0);
                           //   else setView(production.id);
@@ -310,25 +307,25 @@ export default function Funcionario() {
                     </div>
                   ))
                 ) : (
-                  <div className="w-full h-20 border-b-2 border-gray-100 flex justify-center items-center text-gray-500 text-xl font-semibold">
+                  <div className="w-full 2xl:h-20 xl:h-16 border-b-2 border-gray-100 flex justify-center items-center text-gray-500 2xl:text-xl xl:text-lg 2xl:font-semibold xl:font-medium">
                     <p>Nenhum funcionário cadastrado.</p>
                   </div>
                 )
               ) : employees.length === 0 ? (
-                <div className="w-full h-20 border-b-2 border-gray-100 flex justify-center items-center text-gray-500 text-xl font-semibold">
+                <div className="w-full 2xl:h-20 xl:h-16 border-b-2 border-gray-100 flex justify-center items-center text-gray-500 2xl:text-xl xl:text-lg 2xl:font-semibold xl:font-medium">
                   <p>Carregando...</p>
                 </div>
               ) : null}
             </div>
-            <div className="w-full h-40 flex items-center text-gray-600 gap-4">
+            <div className="w-full 2xl:h-40 xl:h-28 flex items-center text-gray-600 gap-4">
               <p className="font-medium">Páginas</p>
-              <div className="w-20 h-8 border-2 border-gray-300 rounded-md justify-center items-center gap-2">
+              <div className="2xl:w-20 2xl:h-8 xl:w-16 xl:h-6 border-2 border-gray-300 rounded-md justify-center items-center gap-2">
                 <input
                   className="border-none focus:ring-0 focus:outline-none w-full h-full bg-transparent px-2"
                   type="text"
                 />
               </div>
-              <div className="flex items-center gap-6 font-semibold text-gray-400">
+              <div className="flex items-center gap-6 font-semibold xl:text-sm text-gray-400">
                 <i className="fa-solid fa-angles-left"></i>
                 <i className="fa-solid fa-angle-left"></i>
                 {Array.from({ length: totalPage }, (_, index) => (

@@ -7,7 +7,9 @@ const SelectDefault: FC<SelectDefaultProps> = ({
   placeholder,
   value,
   onChange,
-  width
+  width,
+  style,
+  height
 }) => {
   const selectedOption =
     options.find((option) => option.value === value) || null;
@@ -15,7 +17,7 @@ const SelectDefault: FC<SelectDefaultProps> = ({
   const customStyle = {
     control: (base: any) => ({
       ...base,
-      height: 46,
+      height: height,
       backgroundColor: "#ffffff", // Altera o fundo do select
       boxShadow: "0px 0px 5px rgba(0, 0, 0, 0.1)", // Adiciona a sombra
       borderColor: "transparent", // Altera a cor da borda
@@ -70,7 +72,7 @@ const SelectDefault: FC<SelectDefaultProps> = ({
         options={options}
         value={selectedOption} 
         onChange={(selected) => onChange(selected)}
-        styles={customStyle}
+        styles={style === 'style' ? customStyle : customDefaut}
         placeholder={placeholder}
         getOptionLabel={(e) => e.label}
         getOptionValue={(e) => e.value}

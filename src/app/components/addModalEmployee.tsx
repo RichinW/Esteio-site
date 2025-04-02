@@ -126,7 +126,7 @@ const AddModalEmployee: FC<AddModalEmployeeProps> = ({ onEmployeeAdded }) => {
   return (
     <>
       <div
-        className="w-72      h-12 flex justify-between items-center text-xl text-blue-400 py-2 px-4 rounded-md hover:bg-blue-500 hover:text-white transition-all cursor-pointer"
+        className="2xl:w-60 2xl:h-12 flex justify-between items-center 2xl:text-xl text-blue-400 2xl:py-2 2xl:px-4 xl:gap-2 xl:px-2 xl:py-1 2xl:rounded-md xl:rounded-sm hover:bg-blue-500 hover:text-white transition-all cursor-pointer"
         onClick={() => setShowModal(true)}
       >
         <i className="fa-solid fa-plus"></i>
@@ -137,7 +137,7 @@ const AddModalEmployee: FC<AddModalEmployeeProps> = ({ onEmployeeAdded }) => {
       {showModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
           <div className="rounded-lg w-5/12 h-5/6 bg-white flex flex-col justify-between px-6">
-            <div className="w-full flex justify-between items-center h-20 min-h-20 text-3xl text-gray-600  border-b-2 border-gray-100">
+            <div className="w-full flex justify-between items-center 2xl:h-20 2xl:min-h-20 text-3xl xl:text-2xl xl:h-16 xl:min-h-20 text-gray-600 border-b-2 border-gray-100">
               <div className="flex items-center justify-between gap-4">
                 <i className="fa-solid fa-book"></i>
                 <p className="font-medium">Cadastro de Funcionário</p>
@@ -157,7 +157,9 @@ const AddModalEmployee: FC<AddModalEmployeeProps> = ({ onEmployeeAdded }) => {
                 <div className="flex w-11/12 h-full justify-between items-center">
                   <div className="flex flex-col gap-2 w-full">
                     <InputText
-                      width="full"
+                      width="w-full"
+                      height="2xl:h-16 xl:h-12"
+                      fontSize="2xl:text-lg xl:text-base"
                       placeholder="Nome"
                       type="text"
                       input={employee.name}
@@ -168,7 +170,9 @@ const AddModalEmployee: FC<AddModalEmployeeProps> = ({ onEmployeeAdded }) => {
                 <div className="flex w-11/12 justify-between items-center">
                   <div className="flex flex-col gap-2">
                     <InputText
-                      width="80"
+                      height="2xl:h-16 xl:h-12"
+                      width="2xl:w-80 xl:w-52"
+                      fontSize="2xl:text-lg xl:text-base"
                       placeholder="Data de nascimento"
                       type="date"
                       input={employee.date_of_birth}
@@ -178,7 +182,9 @@ const AddModalEmployee: FC<AddModalEmployeeProps> = ({ onEmployeeAdded }) => {
                   <div className="flex flex-col gap-2">
                     <div className="flex flex-col gap-2">
                       <InputText
-                        width="80"
+                        height="2xl:h-16 xl:h-12"
+                        width="2xl:w-80 xl:w-52"
+                        fontSize="2xl:text-lg xl:text-base"
                         placeholder="CPF"
                         type="text"
                         input={employee.cpf}
@@ -190,7 +196,9 @@ const AddModalEmployee: FC<AddModalEmployeeProps> = ({ onEmployeeAdded }) => {
                 <div className="flex w-11/12 justify-between items-center">
                   <div className="flex flex-col gap-2 w-80">
                     <InputText
-                      width="80"
+                      height="2xl:h-16 xl:h-12"
+                      width="2xl:w-80 xl:w-52"
+                      fontSize="2xl:text-lg xl:text-base"
                       placeholder="Tefone"
                       type="text"
                       input={employee.phone}
@@ -199,7 +207,9 @@ const AddModalEmployee: FC<AddModalEmployeeProps> = ({ onEmployeeAdded }) => {
                   </div>
                   <div className="flex flex-col gap-2">
                     <InputText
-                      width="80"
+                      height="2xl:h-16 xl:h-12"
+                      width="2xl:w-80 xl:w-52"
+                      fontSize="2xl:text-lg xl:text-base"
                       placeholder="Telefone de Contato"
                       type="text"
                       input={employee.phone_contact}
@@ -207,8 +217,10 @@ const AddModalEmployee: FC<AddModalEmployeeProps> = ({ onEmployeeAdded }) => {
                     />
                   </div>
                 </div>
-                <div className="flex flex-col gap-2 w-full px-8 h-full">
+                <div className="flex flex-col gap-2 2xl:px-8 xl:px-5 w-full h-full">
                   <SelectDefault
+                    style="custom"
+                    height="46"
                     options={options}
                     value={employee.id_account}
                     onChange={handleAccountChange}
@@ -218,9 +230,9 @@ const AddModalEmployee: FC<AddModalEmployeeProps> = ({ onEmployeeAdded }) => {
                 </div>
               </div>
             </div>
-            <div className="w-full h-24 min-h-24 flex justify-end items-center p-2 border-t-2 border-gray-100 gap-4">
+            <div className="w-full 2xl:h-24 2xl:min-h-24 xl:h-20 xl:min-h-20 flex justify-end items-center p-2 border-t-2 border-gray-100 gap-4">
               <input
-                className="border-none bg-blue-500 text-xl font-light flex justify-center items-center text-white rounded-lg w-32 h-12 hover:bg-blue-600 transition-all cursor-pointer"
+                className="border-none bg-blue-500 2xl:text-xl xl:text-base font-light flex justify-center items-center text-white rounded-lg 2xl:w-32 2xl:h-12 xl:w-24 xl:h-10 hover:bg-blue-600 transition-all cursor-pointer"
                 type="submit"
                 value="Adicionar"
                 disabled={loading}

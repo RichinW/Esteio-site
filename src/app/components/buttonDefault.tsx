@@ -7,13 +7,16 @@ const ButtonDefault: FC<ButtonDefaultProps> = ({
   bgColor,
   color,
   onClick,
-  disabled
+  disabled,
+  width,
+  height,
+  fontSize
 }) => {
   return (
     <div
-      className={`${bgColor} w-96 h-16 rounded-md flex justify-center items-center`}
+      className={`${bgColor} ${width} ${height} rounded-md flex justify-center items-center`}
     >
-      <input type="submit" value={text} className={`${color} w-full h-full text-xl`} onClick={onClick} />
+      <input type="submit" value={text} className={`${color} w-full h-full ${fontSize}`} onClick={onClick} />
       {icone && <i className={`${icone}`}></i>}
     </div>
   );
