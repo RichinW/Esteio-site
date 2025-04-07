@@ -25,6 +25,8 @@ const AddModalMission: FC<AddModalMissionProps> = ({ onMissionAdded }) => {
     activity: "",
     audit: null,
     id_regional: null,
+    km_start: null,
+    km_end: null,
     start_date: "",
     end_date: "",
     id_team: null,
@@ -85,6 +87,20 @@ const AddModalMission: FC<AddModalMissionProps> = ({ onMissionAdded }) => {
     }));
   };
 
+  const handleKmStartChange = (value?: string) => {
+    setMission((prevMission) => ({
+      ...prevMission,
+      km_start: value ? Number(value) : null,
+    }));
+  };
+
+  const handleKmEndChange = (value?: string) => {
+    setMission((prevMission) => ({
+      ...prevMission,
+      km_end: value ? Number(value) : null,
+    }));
+  };
+
   const handleRegionalChange = (value?: Options) => {
     setMission((prevEmployee) => ({
       ...prevEmployee,
@@ -142,21 +158,23 @@ const AddModalMission: FC<AddModalMissionProps> = ({ onMissionAdded }) => {
       activity: mission.activity,
       audit: mission.audit,
       id_regional: mission.id_regional,
+      km_start: mission.km_start,
+      km_end: mission.km_end,
       start_date: mission.start_date,
       end_date: mission.end_date,
       id_team: mission.id_team,
     };
     try {
-      setLoading(true);
+      setLoading(true)
       const response = await api.post("/mission/cadastromissao", body);
       onMissionAdded();
-      clearInputs();
+      clearInputs()
       setShowModal(false);
       toast.success(response.data.message);
-      setLoading(false);
+      setLoading(false)
     } catch (err) {
       toast.error("Erro ao cadastrar missão. Tente novamente!");
-      setLoading(false);
+      setLoading(false)
     }
   }
 
@@ -168,6 +186,8 @@ const AddModalMission: FC<AddModalMissionProps> = ({ onMissionAdded }) => {
       activity: "",
       audit: null,
       id_regional: null,
+      km_start: null,
+      km_end: null,
       start_date: "",
       end_date: "",
       id_team: null,
@@ -177,7 +197,7 @@ const AddModalMission: FC<AddModalMissionProps> = ({ onMissionAdded }) => {
   return (
     <>
       <div
-        className="2xl:w-60 2xl:h-12 flex justify-between items-center 2xl:text-xl text-blue-400 2xl:py-2 2xl:px-4 xl:gap-2 xl:px-2 xl:py-1 2xl:rounded-md xl:rounded-sm hover:bg-blue-500 hover:text-white transition-all cursor-pointer"
+        className="w-56 h-12 flex justify-between items-center text-xl text-blue-400 py-2 px-4 rounded-md hover:bg-blue-500 hover:text-white transition-all cursor-pointer"
         onClick={() => setShowModal(true)}
       >
         <i className="fa-solid fa-plus"></i>
@@ -186,10 +206,10 @@ const AddModalMission: FC<AddModalMissionProps> = ({ onMissionAdded }) => {
       {showModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
           <div className="rounded-lg w-5/12 h-5/6 bg-white flex flex-col justify-between px-6">
-            <div className="w-full flex justify-between items-center 2xl:h-20 2xl:min-h-20 text-3xl xl:text-2xl xl:h-16 xl:min-h-20 text-gray-600 border-b-2 border-gray-100">
+            <div className="w-full flex justify-between items-center h-20 min-h-20 text-3xl text-gray-600  border-b-2 border-gray-100 ">
               <div className="flex items-center justify-between gap-4">
                 <i className="fa-solid fa-book"></i>
-                <p className="font-medium">Cadastro de Missão</p>
+                <p className="font-medium">Cadastro de Time</p>
               </div>
               <button className="text-gray-500 hover:text-gray-700">
                 <i
@@ -206,9 +226,7 @@ const AddModalMission: FC<AddModalMissionProps> = ({ onMissionAdded }) => {
                 <div className="flex w-11/12 justify-between items-center">
                   <div className="flex flex-col gap-2 w-80">
                     <InputText
-                      height="2xl:h-16 xl:h-12"
-                      width="2xl:w-80 xl:w-52"
-                      fontSize="2xl:text-lg xl:text-base"
+                      width="80"
                       placeholder="Nome"
                       type="text"
                       input={mission.name}
@@ -217,9 +235,7 @@ const AddModalMission: FC<AddModalMissionProps> = ({ onMissionAdded }) => {
                   </div>
                   <div className="flex flex-col gap-2">
                     <InputText
-                      height="2xl:h-16 xl:h-12"
-                      width="2xl:w-80 xl:w-52"
-                      fontSize="2xl:text-lg xl:text-base"
+                      width="80"
                       placeholder="Auditoria"
                       type="text"
                       input={
@@ -232,9 +248,7 @@ const AddModalMission: FC<AddModalMissionProps> = ({ onMissionAdded }) => {
                 <div className="flex w-11/12 justify-between items-center">
                   <div className="flex flex-col gap-2 w-80">
                     <InputText
-                      height="2xl:h-16 xl:h-12"
-                      width="2xl:w-80 xl:w-52"
-                      fontSize="2xl:text-lg xl:text-base"
+                      width="80"
                       placeholder="Atividade"
                       type="text"
                       input={mission.activity}
@@ -243,9 +257,7 @@ const AddModalMission: FC<AddModalMissionProps> = ({ onMissionAdded }) => {
                   </div>
                   <div className="flex flex-col gap-2">
                     <InputText
-                      height="2xl:h-16 xl:h-12"
-                      width="2xl:w-80 xl:w-52"
-                      fontSize="2xl:text-lg xl:text-base"
+                      width="80"
                       placeholder="Tipo"
                       type="text"
                       input={mission.type}
@@ -255,10 +267,32 @@ const AddModalMission: FC<AddModalMissionProps> = ({ onMissionAdded }) => {
                 </div>
                 <div className="flex w-11/12 justify-between items-center">
                   <div className="flex flex-col gap-2 w-80">
+                  <InputText
+                      width="80"
+                      placeholder="Km Início"
+                      type="number"
+                      input={
+                        mission.km_start !== null ? String(mission.km_start) : ""
+                      }
+                      setInput={handleKmStartChange}
+                    />
+                  </div>
+                  <div className="flex flex-col gap-2">
                     <InputText
-                      height="2xl:h-16 xl:h-12"
-                      width="2xl:w-80 xl:w-52"
-                      fontSize="2xl:text-lg xl:text-base"
+                      width="80"
+                      placeholder="Km Final"
+                      type="number"
+                      input={
+                        mission.km_end !== null ? String(mission.km_end) : ""
+                      }
+                      setInput={handleKmEndChange}
+                    />
+                  </div>
+                </div>
+                <div className="flex w-11/12 justify-between items-center">
+                  <div className="flex flex-col gap-2 w-80">
+                    <InputText
+                      width="80"
                       placeholder="Data de Início"
                       type="date"
                       input={mission.start_date}
@@ -267,9 +301,7 @@ const AddModalMission: FC<AddModalMissionProps> = ({ onMissionAdded }) => {
                   </div>
                   <div className="flex flex-col gap-2">
                     <InputText
-                      height="2xl:h-16 xl:h-12"
-                      width="2xl:w-80 xl:w-52"
-                      fontSize="2xl:text-lg xl:text-base"
+                      width="80"
                       placeholder="Data de Finalização"
                       type="date"
                       input={mission.end_date}
@@ -279,22 +311,18 @@ const AddModalMission: FC<AddModalMissionProps> = ({ onMissionAdded }) => {
                 </div>
                 <div className="flex flex-col gap-2 w-full px-8 h-full">
                   <SelectDefault
-                    height="46"
                     options={optionsRegional}
                     value={mission.id_regional}
                     onChange={handleRegionalChange}
                     placeholder="Regional"
-                    width="full"
                   />
                 </div>
                 <div className="flex flex-col gap-2 w-full px-8 h-full">
                   <SelectDefault
-                    height="46"
                     options={optionsTeam}
                     value={mission.id_team}
                     onChange={handleTeamChange}
                     placeholder="Time"
-                    width="full"
                   />
                 </div>
                 <div className="flex flex-col gap-2 w-full px-8 h-full">
@@ -309,7 +337,7 @@ const AddModalMission: FC<AddModalMissionProps> = ({ onMissionAdded }) => {
             </div>
             <div className="w-full h-24 min-h-24 flex justify-end items-center p-2 mt-2 border-t-2 border-gray-100 gap-4">
               <input
-                className="border-none bg-blue-500 2xl:text-xl xl:text-base font-light flex justify-center items-center text-white rounded-lg 2xl:w-32 2xl:h-12 xl:w-24 xl:h-10 hover:bg-blue-600 transition-all cursor-pointer"
+                className="border-none bg-blue-500 text-xl font-light flex justify-center items-center text-white rounded-lg w-32 h-12 hover:bg-blue-600 transition-all cursor-pointer"
                 type="submit"
                 value="Adicionar"
                 disabled={loading}

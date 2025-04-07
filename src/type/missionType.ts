@@ -9,6 +9,8 @@ export interface MissionOut {
   activity: string;
   audit: number;
   regional: RegionalOut;
+  km_start: number;
+  km_end: number;
   start_date: string;
   end_date: string;
   active: boolean;
@@ -22,6 +24,8 @@ export interface MissionIn {
   activity: string;
   audit: number | null;
   id_regional: number | null;
+  km_start: number | null;
+  km_end: number | null;
   start_date: string;
   end_date: string;
   active?: boolean;

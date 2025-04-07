@@ -2,21 +2,11 @@
 export interface InputTextProps {
   placeholder: string;
   width: string;
-  height: string;
-  fontSize: string;
   icone?: string;
   input: string;
   type: string;
   onClick?: () => void;
   setInput: (value: string) => void;
-}
-
-export interface DeleteModal {
-  name: string
-  returnEvent: any
-  list: any[]
-  apiRoute: string
-  baseRoute: string
 }
 
 export interface ButtonDefaultProps {
@@ -26,10 +16,6 @@ export interface ButtonDefaultProps {
   bgColor: string;
   color?: string;
   onClick: () => void;
-  width: string
-  height: string
-  fontSize: string
-  hover?: string
 }
 
 export interface FilterIn {
@@ -46,7 +32,4 @@ export interface SelectDefaultProps {
   placeholder?: string
   value?: string | number | null
   onChange: any
-  width: string
-  style?: string
-  height: string
 }
