@@ -4,26 +4,26 @@ import api from "../services/api";
 
 const AddModalProduction = () => {
   const [showModal, setShowModal] = useState(false);
-  const [message, setMessage] = useState('')
-  const [type, setType] = useState('')
+  const [message, setMessage] = useState("");
+  const [type, setType] = useState("");
 
-  async function AddMessage () {
+  async function AddMessage() {
     const body = {
       message: message,
-      type: type
-    }
+      type: type,
+    };
     try {
-      const response = await api.post('/cadastroproducao', body)
-      console.log('Resposta da API:', response.data);
-    } catch(err) {
-      console.error('Erro ao enviar dados:', err);
+      const response = await api.post("/cadastroproducao", body);
+      console.log("Resposta da API:", response.data);
+    } catch (err) {
+      console.error("Erro ao enviar dados:", err);
     }
   }
 
   return (
     <>
       <div
-        className="w-60 h-12 flex justify-between items-center text-xl text-blue-400 py-2 px-4 rounded-md hover:bg-blue-500 hover:text-white transition-all cursor-pointer"
+        className="2xl:w-60 2xl:h-12 flex justify-between items-center 2xl:text-xl text-blue-400 2xl:py-2 2xl:px-4 xl:gap-2 xl:px-2 xl:py-1 2xl:rounded-md xl:rounded-sm hover:bg-blue-500 hover:text-white transition-all cursor-pointer"
         onClick={() => setShowModal(true)}
       >
         <i className="fa-solid fa-plus"></i>
@@ -32,7 +32,7 @@ const AddModalProduction = () => {
       {showModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
           <div className="rounded-lg w-5/12 h-5/6 bg-white flex flex-col justify-between px-6">
-            <div className="w-full flex justify-between items-center h-20 text-3xl text-gray-600  border-b-2 border-gray-100">
+            <div className="w-full flex justify-between items-center 2xl:h-20 2xl:min-h-20 text-3xl xl:text-2xl xl:h-16 xl:min-h-20 text-gray-600 border-b-2 border-gray-100">
               <div className="flex items-center justify-between gap-4">
                 <i className="fa-solid fa-book"></i>
                 <p className="font-medium">Cadastro de Diario</p>
@@ -59,9 +59,36 @@ const AddModalProduction = () => {
                 </div>
                 <div className="w-2/4 h-full flex justify-center items-end">
                   <div className="flex justify-center items-center">
-                      <p className={`w-14 h-10 ${type === 'SV' ? 'bg-blue-500 text-white' : 'bg-gray-100 text-gray-600'} font-semibold  flex justify-center items-center cursor-pointer rounded-t-md hover:bg-blue-500 hover:text-white transition-all`} onClick={() => setType('SV')}>SV</p>
-                      <p className={`w-14 h-10 ${type === 'SH' ? 'bg-blue-500 text-white' : 'bg-gray-100 text-gray-600'} font-semibold flex justify-center items-center cursor-pointer rounded-t-md hover:bg-blue-500 hover:text-white transition-all`} onClick={() => setType('SH')}>SH</p>
-                    <p className={`w-14 h-10 ${type === 'DISP' ? 'bg-blue-500 text-white' : 'bg-gray-100 text-gray-600'} font-semibold flex justify-center items-center cursor-pointer rounded-t-md hover:bg-blue-500 hover:text-white transition-all`} onClick={() => setType('DISP')}>DISP</p>
+                    <p
+                      className={`w-14 h-10 ${
+                        type === "SV"
+                          ? "bg-blue-500 text-white"
+                          : "bg-gray-100 text-gray-600"
+                      } font-semibold  flex justify-center items-center cursor-pointer rounded-t-md hover:bg-blue-500 hover:text-white transition-all`}
+                      onClick={() => setType("SV")}
+                    >
+                      SV
+                    </p>
+                    <p
+                      className={`w-14 h-10 ${
+                        type === "SH"
+                          ? "bg-blue-500 text-white"
+                          : "bg-gray-100 text-gray-600"
+                      } font-semibold flex justify-center items-center cursor-pointer rounded-t-md hover:bg-blue-500 hover:text-white transition-all`}
+                      onClick={() => setType("SH")}
+                    >
+                      SH
+                    </p>
+                    <p
+                      className={`w-14 h-10 ${
+                        type === "DISP"
+                          ? "bg-blue-500 text-white"
+                          : "bg-gray-100 text-gray-600"
+                      } font-semibold flex justify-center items-center cursor-pointer rounded-t-md hover:bg-blue-500 hover:text-white transition-all`}
+                      onClick={() => setType("DISP")}
+                    >
+                      DISP
+                    </p>
                   </div>
                 </div>
               </div>

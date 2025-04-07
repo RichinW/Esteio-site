@@ -67,7 +67,7 @@ const FilterModalProduction = () => {
   return (
     <>
       <div
-        className="flex justify-between items-center gap-2 text-lg cursor-pointer"
+        className="flex justify-between items-center gap-2 2xl:text-lg xl:text-base cursor-pointer"
         onClick={() => setShowModal(true)}
       >
         <i className="fa-solid fa-filter text-blue-400"></i>
