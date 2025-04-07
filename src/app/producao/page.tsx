@@ -6,7 +6,9 @@ import api, { verifyToken, getMe } from "../services/api";
 import { useRouter } from "next/navigation";
 import EditModalProduction from "../components/editModalProduction";
 import FilterModalProduction from "../components/filterModalProduction";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
+import InfoProductionModal from "../components/infoProductionModal";
+import DeleteNotificationModal from "../components/deleteNotificationModal";
 
 export default function Producao() {
   const [productions, setProductions] = useState<ProductionOut[]>([]);
@@ -49,23 +51,10 @@ export default function Producao() {
     }
   }
 
-  const deleteProduction = async () => {
-    if (selectedProduction.length <= 0) {
-      toast.info("Selecione algum item para deletar");
-    } else {
-      try {
-        for (const production of selectedProduction) {
-          await api.delete(`/production/deleteproducao/${production.id}`);
-        }
-
-        setSelectedProduction([]);
-        listProductions();
-        toast.success("Produções excluídas com sucesso!");
-      } catch (error) {
-        toast.error("Erro ao tentar deletar as produções");
-      }
-    }
-  };
+  const returnDelete = () => {
+    setSelectedProduction([]);
+    listProductions();
+  }
 
   const toggleProduction = (newProduction: ProductionOut) => {
     setSelectedProduction((prevState) => {
@@ -107,8 +96,23 @@ export default function Producao() {
     return selectedProduction.some((production) => production.id === id);
   };
 
+  const formatKM = (km: number) => {
+    if (!km && km !== 0) return "";
+
+    if (isNaN(km)) return "";
+
+    const kmInt = Math.floor(km);
+    const kmDecimal = Math.round((km - kmInt) * 1000);
+
+    return `${String(kmInt).padStart(3, "0")}+${String(kmDecimal).padStart(
+      3,
+      "0"
+    )}`;
+  };
+
   return (
     <div className="w-screen h-screen flex justify-center items-center">
+      <ToastContainer />
       <div className="h-full w-full flex flex-col">
         <div className="w-full 2xl:h-24 xl:h-16 bg-white flex justify-between items-center px-12 shadow-lg">
           <p className="text-slate-700 font-semibold 2xl:text-2xl xl:xl">
@@ -138,12 +142,14 @@ export default function Producao() {
                   {selectedProduction.length} Selected
                 </p>
               </div>
-              <div
-                className="flex justify-between gap-2 items-center 2xl:text-lg xl:text-base cursor-pointer"
-                onClick={() => deleteProduction()}
-              >
-                <i className="fa-regular fa-trash-can text-blue-400"></i>
-                <p className="text-gray-400">Deletar</p>
+              <div className="flex justify-between gap-2 items-center 2xl:text-lg xl:text-base cursor-pointer">
+                <DeleteNotificationModal
+                  name="Produção"
+                  list={selectedProduction}
+                  returnEvent={() => returnDelete()}
+                  baseRoute="production"
+                  apiRoute="deleteproducao"
+                />
               </div>
             </div>
             <div className="flex justify-between items-center gap-8">
@@ -227,12 +233,10 @@ export default function Producao() {
                             : "2xl:h-12 xl:h-8"
                           : "2xl:h-16 xl:h-12"
                       } border-b-2 border-gray-100 flex flex-col gap-3 ${
-                        production.verification_status === "Corrigido"
-                          ? "bg-blue-200"
+                        production.verification_status === "Certo"
+                          ? "bg-green-200"
                           : production.verification_status === "Errado"
                           ? "bg-red-200"
-                          : production.verification_status === "Certo"
-                          ? "bg-green-200"
                           : ""
                       } justify-center items-center text-gray-400 text-lg transition-all`}
                       key={production.id}
@@ -257,12 +261,13 @@ export default function Producao() {
                         </div>
                         <div className="w-[10%] flex items-center">
                           {(() => {
-                            const date = new Date(production.date);
-                            return !isNaN(date.getTime())
-                              ? date.toLocaleDateString("pt-BR", {
-                                  timeZone: "America/Sao_Paulo",
-                                })
-                              : "Data inválida";
+                            const [y, m, d] = production.date.split("-");
+                            const date = new Date(
+                              parseInt(y),
+                              parseInt(m) - 1,
+                              parseInt(d)
+                            );
+                            return date.toLocaleDateString("pt-BR");
                           })()}
                         </div>
 
@@ -279,66 +284,28 @@ export default function Producao() {
                           {production.highway.name}
                         </div>
                         <div className="w-[9%] flex items-center">
-                          {production.km_start}
+                          {formatKM(production.km_start)}
                         </div>
                         <div className="w-[9%] flex items-center">
-                          {production.km_end}
+                          {formatKM(production.km_end)}
                         </div>
 
                         <div
-                          className="w-[4%] flex items-center text-xl"
+                          className="w-[4%] flex items-center 2xl:text-xl xl:text-base"
                           // onClick={() => {
                           //   if (view === production.id) setView(0);
                           //   else setView(production.id);
                           // }}
                         >
-                          <EditModalProduction edit_production={production} />
+                          <InfoProductionModal
+                            productions={productions}
+                            currentProductionId={production.id}
+                            returnEvent={() => listProductions()}
+                          />
+                          {/* <EditModalProduction edit_production={production} /> */}
                           {/* <i className="fa-solid fa-ellipsis-vertical"></i> */}
-                          <i
-                            className={
-                              view === production.id
-                                ? "fa-solid fa-chevron-up"
-                                : "fa-solid fa-chevron-down"
-                            }
-                            onClick={() => {
-                              setView(
-                                view === production.id ? null : production.id
-                              );
-                            }}
-                          ></i>
                         </div>
                       </div>
-                      {view === production.id && (
-                        <div className="flex w-full justify-between">
-                          <div className="w-[5.5%] flex items-center justify-center"></div>
-                          <div className="w-[4%] flex items-center"></div>
-                          <div className="w-[10%] flex items-center">
-                            {production.mission.activity}
-                          </div>
-                          <div className="w-[9%] flex items-center">
-                            {production.extension}
-                          </div>
-                          <div className="w-[9%] flex items-center">
-                            {production.state_highway}
-                          </div>
-                          <div className="w-[9%] flex items-center">
-                            {production.total_elements}
-                          </div>
-                          <div className="w-[9%] flex items-center">
-                            {production.mission.team.employee_one.name} /{" "}
-                            {production.mission.team.employee_two?.name || ""}{" "}
-                          </div>
-                          <div className="w-[9%] flex items-center">
-                            {production.observation}
-                          </div>
-                          <div className="w-[9%] flex items-center">
-                            {production.verification_observation
-                              ? production.verification_observation
-                              : "Sem nenhuma observação"}
-                          </div>
-                          <div className="w-[4%] flex items-center text-xl cursor-pointer"></div>
-                        </div>
-                      )}
                     </div>
                   ))
                 ) : (
@@ -360,7 +327,7 @@ export default function Producao() {
                   type="text"
                 />
               </div>
-              <div className="flex items-center gap-6 font-semibold text-gray-400">
+              <div className="flex items-center gap-6 font-semibold xl:text-sm text-gray-400">
                 <i className="fa-solid fa-angles-left"></i>
                 <i className="fa-solid fa-angle-left"></i>
                 {Array.from({ length: totalPage }, (_, index) => (
@@ -369,7 +336,10 @@ export default function Producao() {
                     className={`px-2 ${
                       index + 1 === page ? "text-blue-400 underline" : ""
                     }`}
-                    onClick={() => setPage(index + 1)}
+                    onClick={() => {
+                      setPage(index + 1);
+                      setIsLoading(true);
+                    }}
                   >
                     {index + 1}
                   </button>

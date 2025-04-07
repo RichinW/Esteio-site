@@ -66,7 +66,7 @@ const MenuBorder = () => {
             onClick={() => rounter.push("/time")}
           ></i>
           <span className="text-gray-400 group-hover:block hidden ml-2 2xl:text-sm xl:text-xs transition-all">
-            Times
+            Equipe
           </span>
         </div>
 
@@ -76,7 +76,7 @@ const MenuBorder = () => {
             onClick={() => rounter.push("/missao")}
           ></i>
           <span className="text-gray-400 group-hover:block hidden ml-2 2xl:text-sm xl:text-xs transition-all">
-            Missão
+            Rota
           </span>
         </div>
 
@@ -86,7 +86,7 @@ const MenuBorder = () => {
             onClick={() => rounter.push("/sinalizacao/vertical")}
           ></i>
           <span className="text-gray-400 group-hover:block hidden ml-2 2xl:text-sm xl:text-xs transition-all">
-            Sinalização
+            Levantamento
           </span>
         </div>
       </div>

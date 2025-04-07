@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { VerticalOut } from "@/type/sinalization/verticalType";
 import api, { verifyToken, getMe } from "../../services/api";
 import { useRouter } from "next/navigation";
+import { ToastContainer } from "react-toastify";
 export default function SVertical() {
   const [verticals, setVertical] = useState<VerticalOut[]>([]);
   const [loading, setLoading] = useState(true);
@@ -67,6 +68,7 @@ export default function SVertical() {
 
   return (
     <div className="w-screen h-screen flex justify-center items-center">
+      <ToastContainer />
       <div className="h-full w-full flex flex-col">
         <div className="w-full 2xl:h-24 xl:h-16 bg-white flex justify-between items-center px-12 shadow-lg">
           <p className="text-slate-700 font-semibold 2xl:text-2xl xl:xl">
@@ -272,7 +274,7 @@ export default function SVertical() {
                   >
                     {index + 1}
                   </button>
-                ))}   
+                ))}
                 <i className="fa-solid fa-angle-right"></i>
                 <i className="fa-solid fa-angles-right"></i>
               </div>

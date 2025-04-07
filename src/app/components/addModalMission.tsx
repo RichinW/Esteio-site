@@ -25,8 +25,6 @@ const AddModalMission: FC<AddModalMissionProps> = ({ onMissionAdded }) => {
     activity: "",
     audit: null,
     id_regional: null,
-    km_start: null,
-    km_end: null,
     start_date: "",
     end_date: "",
     id_team: null,
@@ -87,20 +85,6 @@ const AddModalMission: FC<AddModalMissionProps> = ({ onMissionAdded }) => {
     }));
   };
 
-  const handleKmStartChange = (value?: string) => {
-    setMission((prevMission) => ({
-      ...prevMission,
-      km_start: value ? Number(value) : null,
-    }));
-  };
-
-  const handleKmEndChange = (value?: string) => {
-    setMission((prevMission) => ({
-      ...prevMission,
-      km_end: value ? Number(value) : null,
-    }));
-  };
-
   const handleRegionalChange = (value?: Options) => {
     setMission((prevEmployee) => ({
       ...prevEmployee,
@@ -158,8 +142,6 @@ const AddModalMission: FC<AddModalMissionProps> = ({ onMissionAdded }) => {
       activity: mission.activity,
       audit: mission.audit,
       id_regional: mission.id_regional,
-      km_start: mission.km_start,
-      km_end: mission.km_end,
       start_date: mission.start_date,
       end_date: mission.end_date,
       id_team: mission.id_team,
@@ -186,8 +168,6 @@ const AddModalMission: FC<AddModalMissionProps> = ({ onMissionAdded }) => {
       activity: "",
       audit: null,
       id_regional: null,
-      km_start: null,
-      km_end: null,
       start_date: "",
       end_date: "",
       id_team: null,
@@ -270,36 +250,6 @@ const AddModalMission: FC<AddModalMissionProps> = ({ onMissionAdded }) => {
                       type="text"
                       input={mission.type}
                       setInput={handleTypeChange}
-                    />
-                  </div>
-                </div>
-                <div className="flex w-11/12 justify-between items-center">
-                  <div className="flex flex-col gap-2 w-80">
-                    <InputText
-                      height="2xl:h-16 xl:h-12"
-                      width="2xl:w-80 xl:w-52"
-                      fontSize="2xl:text-lg xl:text-base"
-                      placeholder="Km Início"
-                      type="number"
-                      input={
-                        mission.km_start !== null
-                          ? String(mission.km_start)
-                          : ""
-                      }
-                      setInput={handleKmStartChange}
-                    />
-                  </div>
-                  <div className="flex flex-col gap-2">
-                    <InputText
-                      height="2xl:h-16 xl:h-12"
-                      width="2xl:w-80 xl:w-52"
-                      fontSize="2xl:text-lg xl:text-base"
-                      placeholder="Km Final"
-                      type="number"
-                      input={
-                        mission.km_end !== null ? String(mission.km_end) : ""
-                      }
-                      setInput={handleKmEndChange}
                     />
                   </div>
                 </div>

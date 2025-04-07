@@ -24,6 +24,14 @@ const AddModalEmployee: FC<AddModalEmployeeProps> = ({ onEmployeeAdded }) => {
     phone: "",
     phone_contact: "",
     id_account: null,
+    id_branch: null,
+    id_departament: null,
+    id_position: null,
+    address: "",
+    allergy: "",
+    medical_condition: "",
+    regular_medication: "",
+    blood_type: "",
   });
   const [accounts, setAcconts] = useState<AccountOut[]>([]);
   const [loading, setLoading] = useState(true);
@@ -120,6 +128,14 @@ const AddModalEmployee: FC<AddModalEmployeeProps> = ({ onEmployeeAdded }) => {
       phone: "",
       phone_contact: "",
       id_account: null,
+      id_branch: null,
+      id_departament: null,
+      id_position: null,
+      address: "",
+      allergy: "",
+      medical_condition: "",
+      regular_medication: "",
+      blood_type: "",
     });
   }
 

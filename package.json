@@ -14,6 +14,7 @@
     "@mui/x-date-pickers": "^7.28.0",
     "axios": "^1.7.9",
     "bootstrap": "^5.3.3",
+    "date-fns": "^4.1.0",
     "esteio_site": "file:",
     "next": "^15.2.4",
     "react": "^19.0.0",

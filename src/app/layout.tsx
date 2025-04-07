@@ -50,7 +50,6 @@ export default function RootLayout({
       >
         <div className="flex">
           {showMenu && <MenuBorder />}
-          <ToastContainer />
           {children}
         </div>
       </body>

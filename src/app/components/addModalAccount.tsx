@@ -2,7 +2,7 @@ import { FC, useState } from "react";
 import InputText from "./inputText";
 import { AccountIn } from "@/type/accountType";
 import api from "../services/api";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 
 interface AddModalAccountProps {
   onAccountAdded: () => void;
@@ -88,6 +88,7 @@ const AddModalAccount: FC<AddModalAccountProps> = ({ onAccountAdded }) => {
       </div>
       {showModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+          <ToastContainer />
           <div className="rounded-lg w-5/12 h-5/6 bg-white flex flex-col justify-between px-6">
             <div className="w-full flex justify-between items-center 2xl:h-20 2xl:min-h-20 text-3xl xl:text-2xl xl:h-16 xl:min-h-20 text-gray-600 border-b-2 border-gray-100">
               <div className="flex items-center justify-between gap-4">

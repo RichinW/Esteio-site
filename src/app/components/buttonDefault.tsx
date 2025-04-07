@@ -10,13 +10,14 @@ const ButtonDefault: FC<ButtonDefaultProps> = ({
   disabled,
   width,
   height,
-  fontSize
+  fontSize,
+  hover
 }) => {
   return (
     <div
-      className={`${bgColor} ${width} ${height} rounded-md flex justify-center items-center`}
+      className={`${bgColor} ${disabled ? ' opacity-70' : `${hover}`} ${width} ${height} rounded-md flex justify-center items-center transition-all`}
     >
-      <input type="submit" value={text} className={`${color} w-full h-full ${fontSize}`} onClick={onClick} />
+      <input type="submit" value={text} className={`${color} w-full h-full ${fontSize}`} onClick={onClick} disabled={disabled} />
       {icone && <i className={`${icone}`}></i>}
     </div>
   );

@@ -11,6 +11,14 @@ export interface InputTextProps {
   setInput: (value: string) => void;
 }
 
+export interface DeleteModal {
+  name: string
+  returnEvent: any
+  list: any[]
+  apiRoute: string
+  baseRoute: string
+}
+
 export interface ButtonDefaultProps {
   text: string;
   icone?: string;
@@ -21,6 +29,7 @@ export interface ButtonDefaultProps {
   width: string
   height: string
   fontSize: string
+  hover?: string
 }
 
 export interface FilterIn {

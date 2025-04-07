@@ -4,8 +4,9 @@ import AddModalEmployee from "../components/addModalEmployee";
 import { EmployeeOut } from "@/type/employeeType";
 import api, { verifyToken } from "../services/api";
 import { useRouter } from "next/navigation";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import InfoEmployeeModal from "../components/infoEmployeeModal";
+import DeleteNotificationModal from "../components/deleteNotificationModal";
 
 export default function Funcionario() {
   const [loading, setLoading] = useState(true);
@@ -43,22 +44,9 @@ export default function Funcionario() {
     }
   }
 
-  const deleteEmployee = async () => {
-    if (selectedEmployee.length <= 0) {
-      toast.info("Selecione algum item para deletar");
-    } else {
-      try {
-        for (const employee of selectedEmployee) {
-          await api.delete(`/employee/deletefuncionario/${employee.id}`);
-        }
-
-        setSelectedEmployee([]);
-        listEmployees();
-        toast.success("Funcionários excluídos com sucesso!");
-      } catch (error) {
-        toast.error("Erro ao tentar deletar os funcionários");
-      }
-    }
+  const returnDelete = () => {
+    setSelectedEmployee([]);
+    listEmployees();
   };
 
   const toggleEmployee = (newEmployee: EmployeeOut) => {
@@ -95,10 +83,11 @@ export default function Funcionario() {
 
   return (
     <div className="w-screen h-screen flex justify-center items-center">
+      <ToastContainer />
       <div className="h-full w-full flex flex-col">
         <div className="w-full 2xl:h-24 xl:h-16 bg-white flex justify-between items-center px-12 shadow-lg">
           <p className="text-slate-700 font-semibold 2xl:text-2xl xl:xl">
-            Produção
+            Funcionários
           </p>
         </div>
         <div className="w-full h-full bg-gray-100 flex flex-col justify-center items-center 2xl:gap-6 xl:gap-3">
@@ -125,8 +114,13 @@ export default function Funcionario() {
                 </p>
               </div>
               <div className="flex justify-between gap-2 items-center 2xl:text-lg xl:text-base cursor-pointer">
-                <i className="fa-regular fa-trash-can text-blue-400"></i>
-                <p className="text-gray-400">Deletar</p>
+                <DeleteNotificationModal
+                  name="Funcinário"
+                  list={selectedEmployee}
+                  returnEvent={() => returnDelete()}
+                  baseRoute="employee"
+                  apiRoute="deletefuncionario"
+                />
               </div>
             </div>
             <div className="flex justify-between items-center gap-8">
@@ -186,7 +180,6 @@ export default function Funcionario() {
                     <i className="fa-solid fa-caret-down"></i>
                   </div>
                 </div>
-                <div className="w-[4%] flex items-center"></div>
                 <div className="w-[4%] flex items-center"></div>
               </div>
               {!loading ? (
@@ -250,60 +243,9 @@ export default function Funcionario() {
                           {employee.phone_contact}
                         </div>
                         <div className="w-[4%] flex items-center 2xl:text-xl xl:text-base">
-                          <InfoEmployeeModal />
-                        </div>
-                        <div
-                          className="w-[4%] flex items-center 2xl:text-xl xl:text-base"
-                          // onClick={() => {
-                          //   if (view === production.id) setView(0);
-                          //   else setView(production.id);
-                          // }}
-                        >
-                          {/* <EditModalProduction edit_production={production} /> */}
-                          {/* <i className="fa-solid fa-ellipsis-vertical"></i> */}
-                          <i
-                            className={
-                              view === employee.id
-                                ? "fa-solid fa-chevron-up"
-                                : "fa-solid fa-chevron-down"
-                            }
-                            onClick={() =>
-                              setView(view === employee.id ? null : employee.id)
-                            }
-                          ></i>
+                          <InfoEmployeeModal employee={employee} />
                         </div>
                       </div>
-                      {/* {view !== 0 && (
-                        <div className="flex w-full justify-between">
-                          <div className="w-[5.5%] flex items-center justify-center"></div>
-                          <div className="w-[4%] flex items-center"></div>
-                          <div className="w-[10%] flex items-center">
-                            {production.activity}
-                          </div>
-                          <div className="w-[9%] flex items-center">
-                            {production.extension}
-                          </div>
-                          <div className="w-[9%] flex items-center">
-                            {production.state_highway}
-                          </div>
-                          <div className="w-[9%] flex items-center">
-                            {production.total_elements}
-                          </div>
-                          <div className="w-[9%] flex items-center">
-                            {production.team.employee_one} /{" "}
-                            {production.team.employee_two}{" "}
-                          </div>
-                          <div className="w-[9%] flex items-center">
-                            {production.observation}
-                          </div>
-                          <div className="w-[9%] flex items-center">
-                            {production.verification_observation
-                              ? production.verification_observation
-                              : "Sem nenhuma observação"}
-                          </div>
-                          <div className="w-[4%] flex items-center text-xl cursor-pointer"></div>
-                        </div>
-                      )} */}
                     </div>
                   ))
                 ) : (
@@ -334,7 +276,10 @@ export default function Funcionario() {
                     className={`px-2 ${
                       index + 1 === page ? "text-blue-400 underline" : ""
                     }`}
-                    onClick={() => setPage(index + 1)}
+                    onClick={() => {
+                      setPage(index + 1);
+                      setLoading(true);
+                    }}
                   >
                     {index + 1}
                   </button>

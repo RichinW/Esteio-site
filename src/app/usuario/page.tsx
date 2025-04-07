@@ -5,11 +5,11 @@ import { PermissionOut } from "@/type/permissionType";
 import AddModalAccount from "../components/addModalAccount";
 import api, { verifyToken, getMe } from "../services/api";
 import { useRouter } from "next/navigation";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 
 export default function Usuario() {
   const [accounts, setAccounts] = useState<AccountOut[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
   const [view, setView] = useState<number | null>(null);
   const [selectedAccount, setSelectedAccount] = useState<AccountOut[]>([]);
@@ -42,9 +42,9 @@ export default function Usuario() {
       );
       setAccounts(response.data.accounts);
       setTotalPage(Math.ceil(response.data.total_items / 7));
-      setLoading(false);
+      setIsLoading(false);
     } catch (err) {
-      setLoading(false);
+      setIsLoading(false);
     }
   }
 
@@ -100,6 +100,7 @@ export default function Usuario() {
 
   return (
     <div className="w-screen h-screen flex justify-center items-center">
+      <ToastContainer />
       <div className="h-full w-full flex flex-col">
         <div className="w-full 2xl:h-24 xl:h-16 bg-white flex justify-between items-center px-12 shadow-lg">
           <p className="text-slate-700 font-semibold 2xl:text-2xl xl:xl">
@@ -206,7 +207,7 @@ export default function Usuario() {
                 </div>
                 <div className="w-[4%] flex items-center"></div>
               </div>
-              {!loading ? (
+              {!isLoading ? (
                 accounts.length > 0 ? (
                   accounts.map((account) => (
                     <div
@@ -247,33 +248,8 @@ export default function Usuario() {
                         <div className="w-[9%] flex items-center"></div>
                         <div className="w-[9%] flex items-center"></div>
 
-                        <div className="w-[4%] flex items-center text-xl">
-                          <i
-                            className={
-                              view === account.id
-                                ? "fa-solid fa-chevron-up"
-                                : "fa-solid fa-chevron-down"
-                            }
-                            onClick={() => {
-                              setView(view === account.id ? null : account.id);
-                            }}
-                          ></i>
-                        </div>
+                        <div className="w-[4%] flex items-center text-xl"></div>
                       </div>
-                      {view === account.id && (
-                        <div className="flex w-full justify-between">
-                          <div className="w-[5.5%] flex items-center justify-center"></div>
-                          <div className="w-[4%] flex items-center"></div>
-                          <div className="w-[10%] flex items-center"></div>
-                          <div className="w-[9%] flex items-center"></div>
-                          <div className="w-[9%] flex items-center"></div>
-                          <div className="w-[9%] flex items-center"></div>
-                          <div className="w-[9%] flex items-center"></div>
-                          <div className="w-[9%] flex items-center"></div>
-                          <div className="w-[9%] flex items-center"></div>
-                          <div className="w-[4%] flex items-center text-xl cursor-pointer"></div>
-                        </div>
-                      )}
                     </div>
                   ))
                 ) : (
@@ -304,7 +280,10 @@ export default function Usuario() {
                     className={`px-2 ${
                       index + 1 === page ? "text-blue-400 underline" : ""
                     }`}
-                    onClick={() => setPage(index + 1)}
+                    onClick={() => {
+                      setPage(index + 1);
+                      setIsLoading(true);
+                    }}
                   >
                     {index + 1}
                   </button>

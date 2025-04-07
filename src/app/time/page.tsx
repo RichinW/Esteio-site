@@ -5,11 +5,11 @@ import { PermissionOut } from "@/type/permissionType";
 import AddModalTeam from "../components/addModalTeam";
 import { useRouter } from "next/navigation";
 import api, { verifyToken, getMe } from "@/app/services/api";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 
 export default function Time() {
   const [teams, setTeams] = useState<TeamOut[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
   const [view, setView] = useState<number | null>(null);
   const [selectedTeam, setSelectedTeam] = useState<TeamOut[]>([]);
@@ -39,9 +39,9 @@ export default function Time() {
     try {
       const response = await api.get(`/team/listatime/${pageStart}/${pageEnd}`);
       setTeams(response.data.teams);
-      setLoading(false);
+      setIsLoading(false);
     } catch (err) {
-      setLoading(false);
+      setIsLoading(false);
     }
   }
 
@@ -95,10 +95,11 @@ export default function Time() {
 
   return (
     <div className="w-screen h-screen flex justify-center items-center">
+      <ToastContainer />
       <div className="h-full w-full flex flex-col">
         <div className="w-full 2xl:h-24 xl:h-16 bg-white flex justify-between items-center px-12 shadow-lg">
           <p className="text-slate-700 font-semibold 2xl:text-2xl xl:xl">
-            Times
+            Equipes
           </p>
         </div>
         <div className="w-full h-full bg-gray-100 flex flex-col justify-center items-center 2xl:gap-6 xl:gap-3">
@@ -198,7 +199,7 @@ export default function Time() {
                 </div>
                 <div className="w-[4%] flex items-center"></div>
               </div>
-              {!loading ? (
+              {!isLoading ? (
                 teams.length > 0 ? (
                   teams.map((team) => (
                     <div
@@ -240,7 +241,7 @@ export default function Time() {
                             view === team.id ? "" : "truncate"
                           }`}
                         >
-                          {team.employee_two?.name}
+                          {team.employee_two?.name || "Nenhum"}
                         </div>
                         <div className="w-[15%] flex items-center">
                           {(() => {
@@ -256,33 +257,8 @@ export default function Time() {
                         <div className="w-[9%] flex items-center"></div>
                         <div className="w-[9%] flex items-center"></div>
 
-                        <div className="w-[4%] flex items-center text-xl">
-                          <i
-                            className={
-                              view === team.id
-                                ? "fa-solid fa-chevron-up"
-                                : "fa-solid fa-chevron-down"
-                            }
-                            onClick={() => {
-                              setView(view === team.id ? null : team.id);
-                            }}
-                          ></i>
-                        </div>
+                        <div className="w-[4%] flex items-center text-xl"></div>
                       </div>
-                      {view === team.id && (
-                        <div className="flex w-full justify-between">
-                          <div className="w-[5.5%] flex items-center justify-center"></div>
-                          <div className="w-[4%] flex items-center"></div>
-                          <div className="w-[10%] flex items-center"></div>
-                          <div className="w-[9%] flex items-center"></div>
-                          <div className="w-[9%] flex items-center"></div>
-                          <div className="w-[9%] flex items-center"></div>
-                          <div className="w-[9%] flex items-center"></div>
-                          <div className="w-[9%] flex items-center"></div>
-                          <div className="w-[9%] flex items-center"></div>
-                          <div className="w-[4%] flex items-center text-xl cursor-pointer"></div>
-                        </div>
-                      )}
                     </div>
                   ))
                 ) : (
@@ -313,7 +289,10 @@ export default function Time() {
                     className={`px-2 ${
                       index + 1 === page ? "text-blue-400 underline" : ""
                     }`}
-                    onClick={() => setPage(index + 1)}
+                    onClick={() => {
+                      setPage(index + 1);
+                      setIsLoading(true);
+                    }}
                   >
                     {index + 1}
                   </button>

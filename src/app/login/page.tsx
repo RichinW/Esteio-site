@@ -6,7 +6,7 @@ import api, { setAuthToken, clearAuthToken } from "../services/api";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/navigation";
 import axios from "axios";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 
 export default function Login() {
   const [loading, setLoading] = useState(false);
@@ -58,6 +58,7 @@ export default function Login() {
 
   return (
     <div className="w-screen h-screen flex bg-gray-100 justify-center items-center">
+      <ToastContainer />
       <div className="xl:w-2/6 xl:h-4/5 2xl:w-2/6 2x:h-3/5 bg-white shadow-gray-300 shadow-xl rounded-lg flex flex-col items-center justify-evenly">
         <div
           className={`logo-container relative w-24 h-24 bg-white ${
@@ -106,7 +107,9 @@ export default function Login() {
             width="2xl:w-96 xl:w-80"
             fontSize="2xl:text-lg xl:text-base"
           />
-          <p className="text-gray-400 underline 2xl:text-base xl:text-sm">Esqueci minha senha</p>
+          <p className="text-gray-400 underline 2xl:text-base xl:text-sm">
+            Esqueci minha senha
+          </p>
         </div>
       </div>
     </div>

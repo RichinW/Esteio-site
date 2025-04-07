@@ -4,10 +4,11 @@ import AddModalMission from "../components/addModalMission";
 import { MissionOut } from "@/type/missionType";
 import api, { verifyToken } from "../services/api";
 import { useRouter } from "next/navigation";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
+import DeleteNotificationModal from "../components/deleteNotificationModal";
 
 export default function Missao() {
-  const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const [view, setView] = useState<number | null>(null);
   const [missions, setMissions] = useState<MissionOut[]>([]);
   const router = useRouter();
@@ -36,28 +37,15 @@ export default function Missao() {
       );
       setMissions(response.data.missions);
       setTotalPage(Math.ceil(response.data.total_items / 7));
-      setLoading(false);
+      setIsLoading(false);
     } catch (err) {
-      setLoading(false);
+      setIsLoading(false);
     }
   }
 
-  const deleteMission = async () => {
-    if (selectedMission.length <= 0) {
-      toast.info("Selecione algum item para deletar");
-    } else {
-      try {
-        for (const mission of selectedMission) {
-          await api.delete(`/mission/deletemissao/${mission.id}`);
-        }
-
-        setSelectedMission([]);
-        listMissions();
-        toast.success("Missões excluídas com sucesso!");
-      } catch (error) {
-        toast.error("Erro ao tentar deletar as missões");
-      }
-    }
+  const returnDelete = async () => {
+    setSelectedMission([]);
+    listMissions();
   };
 
   const toggleMission = (newMission: MissionOut) => {
@@ -94,10 +82,11 @@ export default function Missao() {
 
   return (
     <div className="w-screen h-screen flex justify-center items-center">
+      <ToastContainer />
       <div className="h-full w-full flex flex-col">
         <div className="w-full 2xl:h-24 xl:h-16 bg-white flex justify-between items-center px-12 shadow-lg">
           <p className="text-slate-700 font-semibold 2xl:text-2xl xl:xl">
-            Missões
+            Rotas
           </p>
         </div>
         <div className="w-full h-full bg-gray-100 flex flex-col justify-center items-center 2xl:gap-6 xl:gap-3">
@@ -123,12 +112,14 @@ export default function Missao() {
                   {selectedMission.length} Selected
                 </p>
               </div>
-              <div
-                className="flex justify-between gap-2 items-center 2xl:text-lg xl:text-base cursor-pointer"
-                onClick={() => deleteMission()}
-              >
-                <i className="fa-regular fa-trash-can text-blue-400"></i>
-                <p className="text-gray-400">Deletar</p>
+              <div className="flex justify-between gap-2 items-center 2xl:text-lg xl:text-base cursor-pointer">
+                <DeleteNotificationModal
+                  list={selectedMission}
+                  name="Rota"
+                  apiRoute="deletemissao"
+                  baseRoute="mission"
+                  returnEvent={() => returnDelete()}
+                />
               </div>
             </div>
             <div className="flex justify-between items-center gap-8">
@@ -153,14 +144,14 @@ export default function Missao() {
                     <i className="fa-solid fa-caret-down"></i>
                   </div>
                 </div>
-                <div className="w-[14%] flex items-center gap-2">
+                <div className="w-[10%] flex items-center gap-2">
                   <p>Nome</p>
                   <div className="flex flex-col justify-center text-gray-300">
                     <i className="fa-solid fa-caret-up"></i>
                     <i className="fa-solid fa-caret-down"></i>
                   </div>
                 </div>
-                <div className="w-[9%] flex items-center gap-2">
+                <div className="w-[10%] flex items-center gap-2">
                   <p>Atividade</p>
                   <div className="flex flex-col justify-center text-gray-300">
                     <i className="fa-solid fa-caret-up"></i>
@@ -190,7 +181,7 @@ export default function Missao() {
                 </div>
                 <div className="w-[4%] flex items-center"></div>
               </div>
-              {!loading ? (
+              {!isLoading ? (
                 missions && missions.length > 0 ? (
                   missions.map((mission) => (
                     <div
@@ -221,7 +212,7 @@ export default function Missao() {
                         <div className="w-[4%] flex items-center">
                           {mission.id}
                         </div>
-                        <div className="w-[14%] flex items-center">
+                        <div className="w-[10%] flex items-center">
                           {mission.name}
                         </div>
                         <div className="w-[10%] flex items-center">
@@ -237,7 +228,7 @@ export default function Missao() {
                             : "Sem regional"}
                         </div>
                         <div className="w-[4%] flex items-center">
-                          {mission.active}
+                          {mission.active ? "Sim" : "Não"}
                         </div>
 
                         <div
@@ -249,57 +240,8 @@ export default function Missao() {
                         >
                           {/* <EditModalProduction edit_production={production} /> */}
                           {/* <i className="fa-solid fa-ellipsis-vertical"></i> */}
-                          <i
-                            className={
-                              view === mission.id
-                                ? "fa-solid fa-chevron-up"
-                                : "fa-solid fa-chevron-down"
-                            }
-                            onClick={() =>
-                              setView(view === mission.id ? null : mission.id)
-                            }
-                          ></i>
                         </div>
                       </div>
-                      {view === mission.id && (
-                        <div className="flex w-full justify-between">
-                          <div className="w-[5.5%] flex items-center justify-center"></div>
-                          <div className="w-[4%] flex items-center"></div>
-                          <div className="w-[14%] flex items-center">
-                            {mission.team.employee_one.name} /{" "}
-                            {mission.team.employee_two?.name}
-                          </div>
-                          <div className="w-[10%] flex items-center">
-                            {(() => {
-                              const date = new Date(mission.start_date);
-                              return !isNaN(date.getTime())
-                                ? date.toLocaleDateString("pt-BR", {
-                                    timeZone: "America/Sao_Paulo",
-                                  })
-                                : "Data inválida";
-                            })()}{" "}
-                          </div>
-                          <div className="w-[9%] flex items-center">
-                            {(() => {
-                              const date = new Date(mission.end_date);
-                              return !isNaN(date.getTime())
-                                ? date.toLocaleDateString("pt-BR", {
-                                    timeZone: "America/Sao_Paulo",
-                                  })
-                                : "Data inválida";
-                            })()}
-                          </div>
-                          <div className="w-[9%] flex items-center">
-                            {mission.km_start}
-                          </div>
-                          <div className="w-[4%] flex items-center">
-                            {mission.km_end}
-                          </div>
-                          <div className="w-[4%] flex items-center">
-                            {mission.observation}
-                          </div>
-                        </div>
-                      )}
                     </div>
                   ))
                 ) : (
@@ -330,7 +272,10 @@ export default function Missao() {
                     className={`px-2 ${
                       index + 1 === page ? "text-blue-400 underline" : ""
                     }`}
-                    onClick={() => setPage(index + 1)}
+                    onClick={() => {
+                      setPage(index + 1);
+                      setIsLoading(true);
+                    }}
                   >
                     {index + 1}
                   </button>
