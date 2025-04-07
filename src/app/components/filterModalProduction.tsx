@@ -73,7 +73,7 @@ const FilterModalProduction = () => {
         <i className="fa-solid fa-filter text-blue-400"></i>
         <p className="text-gray-400">Filtrar</p>
       </div>
-      {showModal && (
+      {/* {showModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
           <div className="rounded-lg w-5/12 h-5/6 bg-white flex flex-col justify-between px-6">
             <div className="w-full flex justify-between items-center h-20 min-h-20 text-3xl text-gray-600  border-b-2 border-gray-100">
@@ -173,7 +173,7 @@ const FilterModalProduction = () => {
             </div>
           </div>
         </div>
-      )}
+      )} */}
     </>
   );
 };
