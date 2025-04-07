@@ -8,8 +8,6 @@ const InputText: FC<InputTextProps> = ({
   input,
   setInput,
   width,
-  height,
-  fontSize,
   onClick
 }) => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -17,9 +15,9 @@ const InputText: FC<InputTextProps> = ({
     
   };
   return (
-    <div className={`${width} ${height} bg-gray-100 rounded-md p-4 flex justify-center items-center gap-2`}>
+    <div className={`w-${width} h-16 bg-gray-100 rounded-md p-4 flex justify-center items-center gap-2`}>
       <input
-        className={`bg-transparent focus:outline-none w-full h-full text-gray-600 ${fontSize} placeholder:text-gray-400`}
+        className="bg-transparent focus:outline-none w-full h-full text-gray-600 text-lg placeholder:text-gray-400"
         placeholder={placeholder}
         value={input === null ? '': input}
         onChange={handleInputChange}
