@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 
 const api = axios.create({
-  baseURL: "http://127.0.0.1:5000",
+  baseURL: "https://esteioprojeto.onrender.com",
   withCredentials: true,
   headers: {
     "Content-Type": "application/json",
