@@ -17,6 +17,7 @@ export interface DeleteModal {
   list: any[]
   apiRoute: string
   baseRoute: string
+  trigger: React.ReactNode;
 }
 
 export interface ButtonDefaultProps {

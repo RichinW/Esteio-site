@@ -9,7 +9,7 @@ import InfoEmployeeModal from "../components/infoEmployeeModal";
 import DeleteNotificationModal from "../components/deleteNotificationModal";
 
 export default function Funcionario() {
-  const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const [view, setView] = useState<number | null>(null);
   const [employees, setEmployees] = useState<EmployeeOut[]>([]);
   const router = useRouter();
@@ -38,9 +38,9 @@ export default function Funcionario() {
       );
       setEmployees(response.data.employees);
       setTotalPage(Math.ceil(response.data.total_items / 7));
-      setLoading(false);
+      setIsLoading(false);
     } catch (err) {
-      setLoading(false);
+      setIsLoading(false);
     }
   }
 
@@ -120,6 +120,12 @@ export default function Funcionario() {
                   returnEvent={() => returnDelete()}
                   baseRoute="employee"
                   apiRoute="deletefuncionario"
+                  trigger={
+                    <>
+                      <i className="fa-regular fa-trash-can text-blue-400"></i>
+                      <p className="text-gray-400">Deletar</p>
+                    </>
+                  }
                 />
               </div>
             </div>
@@ -182,7 +188,7 @@ export default function Funcionario() {
                 </div>
                 <div className="w-[4%] flex items-center"></div>
               </div>
-              {!loading ? (
+              {!isLoading ? (
                 employees.length > 0 ? (
                   employees.map((employee) => (
                     <div
@@ -243,7 +249,10 @@ export default function Funcionario() {
                           {employee.phone_contact}
                         </div>
                         <div className="w-[4%] flex items-center 2xl:text-xl xl:text-base">
-                          <InfoEmployeeModal employee={employee} />
+                          <InfoEmployeeModal
+                            employee={employee}
+                            returnEvent={() => listEmployees()}
+                          />
                         </div>
                       </div>
                     </div>
@@ -278,7 +287,7 @@ export default function Funcionario() {
                     }`}
                     onClick={() => {
                       setPage(index + 1);
-                      setLoading(true);
+                      setIsLoading(true);
                     }}
                   >
                     {index + 1}

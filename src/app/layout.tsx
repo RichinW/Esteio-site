@@ -32,11 +32,11 @@ export default function RootLayout({
   const router = useRouter();
 
   useEffect(() => {
-    if(pathname !== "/login/"){
+    if (pathname !== "/login/" && localStorage.getItem("authToken")) {
       const checkToken = async () => {
         await verifyToken(router.push);
       };
-      checkToken()
+      checkToken();
     }
     setCurrentPathname(pathname);
   }, [pathname]);

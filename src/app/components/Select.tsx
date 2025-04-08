@@ -44,16 +44,18 @@ const SelectDefault: FC<SelectDefaultProps> = ({
   const customDefaut = {
     control: (base: any) => ({
       ...base,
-      height: 64,
-      backgroundColor: "##f3f4f6", // Altera o fundo do select
-      borderColor: "#ccc", // Altera a cor da borda
+      height: 52,
+      backgroundColor: "#f3f4f6", // Altera o fundo do select
+      borderColor: "transparent", // Altera a cor da borda
+      borderRadius: 8, // <-- Adiciona borda arredondada
       "&:hover": {
-        borderColor: "#aaa", // Altera a cor da borda ao passar o mouse
+        borderColor: "transparent", // Altera a cor da borda ao passar o mouse
       },
     }),
     menu: (base: any) => ({
       ...base,
       backgroundColor: "#ffffff", // Altera o fundo do menu de opções
+      borderRadius: 8, // Opcional: também arredonda o menu dropdown
     }),
     option: (base: any, state: any) => ({
       ...base,

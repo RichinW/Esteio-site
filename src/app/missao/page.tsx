@@ -6,6 +6,7 @@ import api, { verifyToken } from "../services/api";
 import { useRouter } from "next/navigation";
 import { toast, ToastContainer } from "react-toastify";
 import DeleteNotificationModal from "../components/deleteNotificationModal";
+import InfoMissionModal from "../components/infoMissionModal";
 
 export default function Missao() {
   const [isLoading, setIsLoading] = useState(true);
@@ -119,6 +120,12 @@ export default function Missao() {
                   apiRoute="deletemissao"
                   baseRoute="mission"
                   returnEvent={() => returnDelete()}
+                  trigger={
+                    <>
+                      <i className="fa-regular fa-trash-can text-blue-400"></i>
+                      <p className="text-gray-400">Deletar</p>
+                    </>
+                  }
                 />
               </div>
             </div>
@@ -153,6 +160,13 @@ export default function Missao() {
                 </div>
                 <div className="w-[10%] flex items-center gap-2">
                   <p>Atividade</p>
+                  <div className="flex flex-col justify-center text-gray-300">
+                    <i className="fa-solid fa-caret-up"></i>
+                    <i className="fa-solid fa-caret-down"></i>
+                  </div>
+                </div>
+                <div className="w-[9%] flex items-center gap-2">
+                  <p>Tipo</p>
                   <div className="flex flex-col justify-center text-gray-300">
                     <i className="fa-solid fa-caret-up"></i>
                     <i className="fa-solid fa-caret-down"></i>
@@ -218,7 +232,9 @@ export default function Missao() {
                         <div className="w-[10%] flex items-center">
                           {mission.activity}
                         </div>
-
+                        <div className="w-[10%] flex items-center">
+                          {mission.type}
+                        </div>
                         <div className="w-[9%] flex items-center">
                           {mission.audit}
                         </div>
@@ -232,14 +248,13 @@ export default function Missao() {
                         </div>
 
                         <div
-                          className="w-[4%] flex items-center text-xl"
+                          className="w-[4%] flex items-center 2xl:text-xl xl:text-base"
                           // onClick={() => {
                           //   if (view === production.id) setView(0);
                           //   else setView(production.id);
                           // }}
                         >
-                          {/* <EditModalProduction edit_production={production} /> */}
-                          {/* <i className="fa-solid fa-ellipsis-vertical"></i> */}
+                          <InfoMissionModal mission={mission} returnEvent={() => listMissions()} />
                         </div>
                       </div>
                     </div>

@@ -12,7 +12,6 @@ import DeleteNotificationModal from "../components/deleteNotificationModal";
 
 export default function Producao() {
   const [productions, setProductions] = useState<ProductionOut[]>([]);
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
@@ -28,7 +27,7 @@ export default function Producao() {
 
   useEffect(() => {
     const get = async () => {
-      console.log(await getMe());
+      await getMe();
     };
     get();
     listProductions();
@@ -45,16 +44,16 @@ export default function Producao() {
       );
       setProductions(response.data.productions);
       setTotalPage(Math.ceil(response.data.total_items / 7));
-      setLoading(false);
+      setIsLoading(false);
     } catch (err) {
-      setLoading(false);
+      setIsLoading(false);
     }
   }
 
   const returnDelete = () => {
     setSelectedProduction([]);
     listProductions();
-  }
+  };
 
   const toggleProduction = (newProduction: ProductionOut) => {
     setSelectedProduction((prevState) => {
@@ -149,6 +148,12 @@ export default function Producao() {
                   returnEvent={() => returnDelete()}
                   baseRoute="production"
                   apiRoute="deleteproducao"
+                  trigger={
+                    <>
+                      <i className="fa-regular fa-trash-can text-blue-400"></i>
+                      <p className="text-gray-400">Deletar</p>
+                    </>
+                  }
                 />
               </div>
             </div>
@@ -222,7 +227,7 @@ export default function Producao() {
                 </div>
                 <div className="w-[4%] flex items-center"></div>
               </div>
-              {!loading ? (
+              {!isLoading ? (
                 productions.length > 0 ? (
                   productions.map((production) => (
                     <div

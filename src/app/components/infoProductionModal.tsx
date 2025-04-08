@@ -4,17 +4,18 @@ import { ProductionOut } from "@/type/productionType";
 import ButtonDefault from "./buttonDefault";
 import api from "../services/api";
 import { toast } from "react-toastify";
+import DeleteNotificationModal from "./deleteNotificationModal";
 
 interface ObjProduction {
   productions: ProductionOut[];
   currentProductionId: number;
-  returnEvent: () => {}
+  returnEvent: () => {};
 }
 
 const InfoProductionModal: FC<ObjProduction> = ({
   productions,
   currentProductionId,
-  returnEvent
+  returnEvent,
 }) => {
   const [showModal, setShowModal] = useState(false);
   const [checking, setChecking] = useState(true);
@@ -22,21 +23,29 @@ const InfoProductionModal: FC<ObjProduction> = ({
   const [currentId, setCurrentId] = useState(currentProductionId);
 
   const currentIndex = productions.findIndex((p) => p.id === currentId);
+  const [editMode, setEditMode] = useState(false);
   const production = productions[currentIndex];
-  const [amount, setAmount] = useState<number | null>(production.verified_amount ?? null);
+  const productionList = [production];
+  const [amount, setAmount] = useState<number | null>(
+    production.verified_amount ?? null
+  );
 
-  async function alterStateVerifiation () {
+  async function alterStateVerifiation() {
     try {
-      const response = await api.put(`/production/editarproducao/alterarverificacao/${currentId}`, {
-        verification_status: amount === production.total_elements ? "Certo" : "Errado",
-        verified_amount: amount
-      })
-      toast.success(response.data.message)
-      setShowModal(false)
-      setChecking(false)
-      returnEvent()
-    } catch(err) {
-      toast.error("Erro ao adicionar verificação!")
+      const response = await api.put(
+        `/production/editarproducao/alterarverificacao/${currentId}`,
+        {
+          verification_status:
+            amount === production.total_elements ? "Certo" : "Errado",
+          verified_amount: amount,
+        }
+      );
+      toast.success(response.data.message);
+      setShowModal(false);
+      setChecking(false);
+      returnEvent();
+    } catch (err) {
+      toast.error("Erro ao adicionar verificação!");
     }
   }
 
@@ -106,12 +115,28 @@ const InfoProductionModal: FC<ObjProduction> = ({
                 </button>
               </div>
               <div className="flex gap-2">
-                <div className="p-2 flex justify-center items-center rounded-md border-2 border-gray-100 cursor-pointer hover:bg-gray-100 transition-all">
+                <div
+                  className={`p-2 flex justify-center items-center rounded-md border-2 cursor-pointer ${
+                    editMode
+                      ? "border-blue-600 bg-blue-500 hover:bg-blue-600 text-white"
+                      : "border-gray-100 hover:bg-gray-100"
+                  } transition-all`}
+                  onClick={() => setEditMode(!editMode)}
+                >
                   <i className="fa-solid fa-pencil text-lg"></i>
                 </div>
-                <div className="p-2 flex justify-center items-center rounded-md border-2 border-gray-100 cursor-pointer hover:bg-gray-100 transition-all">
-                  <i className="fa-solid fa-trash-can text-lg"></i>
-                </div>
+                <DeleteNotificationModal
+                  name="Produção"
+                  list={productionList}
+                  returnEvent={() => returnEvent()}
+                  baseRoute="production"
+                  apiRoute="deleteproducao"
+                  trigger={
+                    <div className="p-2 flex justify-center items-center rounded-md border-2 border-gray-100 cursor-pointer hover:bg-gray-100 transition-all">
+                      <i className="fa-solid fa-trash-can text-lg"></i>
+                    </div>
+                  }
+                />
               </div>
             </div>
             <div className="w-full flex justify-start px-6 2xl:py-8 xl:py-4 flex-col gap-3 bg-white border-b-2 border-t-2">
@@ -119,8 +144,14 @@ const InfoProductionModal: FC<ObjProduction> = ({
                 <p className="xl:text-base xl:font-semibold text-gray-700">
                   Equipe
                 </p>
-                <div className="xl:w-10 xl:h-4 rounded-md bg-green-400 text-white flex justify-center items-center">
-                  <p className="xl:text-xs">Ativo</p>
+                <div
+                  className={`xl:px-2 xl:py-1 rounded-md ${
+                    production.mission.active ? "bg-green-400" : "bg-red-500"
+                  } text-white flex justify-center items-center`}
+                >
+                  <p className="xl:text-xs">
+                    {production.mission.active ? "Ativo" : "Desativado"}
+                  </p>
                 </div>
               </div>
               <div className="flex flex-col items-start justify-center gap-2">
@@ -151,9 +182,9 @@ const InfoProductionModal: FC<ObjProduction> = ({
                       <div className="flex flex-col gap-4 justify-start items-start">
                         <div className="flex flex-col font-semibold">
                           <p className="text-xs text-gray-400">Data</p>
-                          <p className="text-xs text-gray-700">
+                          <p>
                             {(() => {
-                              const [y, m, d] = production.date.split("-");
+                              const [y, m, d] = production.date;
                               const date = new Date(
                                 parseInt(y),
                                 parseInt(m) - 1,
@@ -269,7 +300,7 @@ const InfoProductionModal: FC<ObjProduction> = ({
                               }}
                               placeholder="Não Verificado"
                               disabled={checking}
-                              className="outline-none xl:text-xs placeholder:text-gray-400 text-gray-700 xl:w-20 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none [-moz-appearance:textfield]"
+                              className="outline-none xl:text-xs placeholder:text-gray-400 disabled:bg-white text-gray-700 xl:w-20 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none [-moz-appearance:textfield]"
                             />
                             <i
                               className={`fa-solid fa-pencil xl:text-sm transition-all ${

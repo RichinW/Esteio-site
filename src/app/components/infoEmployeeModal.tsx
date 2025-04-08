@@ -2,14 +2,17 @@ import { EmployeeOut } from "@/type/employeeType";
 import { FC, useState } from "react";
 import { format } from "date-fns";
 import { enUS } from "date-fns/locale";
+import DeleteNotificationModal from "./deleteNotificationModal";
 
 interface ObjEmployee {
   employee: EmployeeOut;
+  returnEvent: () => {};
 }
 
-const InfoEmployeeModal: FC<ObjEmployee> = ({ employee }) => {
+const InfoEmployeeModal: FC<ObjEmployee> = ({ employee, returnEvent }) => {
   const [showModal, setShowModal] = useState(false);
   const [pageOption, setPageOption] = useState("detalhes");
+  const listEmployee = [employee];
 
   const getFirstTwoNames = (fullName: string) => {
     const names = fullName.split(" ");
@@ -52,9 +55,18 @@ const InfoEmployeeModal: FC<ObjEmployee> = ({ employee }) => {
                 <div className="p-2 flex justify-center items-center rounded-md border-2 border-gray-100 cursor-pointer hover:bg-gray-100 transition-all">
                   <i className="fa-solid fa-pencil text-lg"></i>
                 </div>
-                <div className="p-2 flex justify-center items-center rounded-md border-2 border-gray-100 cursor-pointer hover:bg-gray-100 transition-all">
-                  <i className="fa-solid fa-trash-can text-lg"></i>
-                </div>
+                <DeleteNotificationModal
+                  name="Funcinário"
+                  list={listEmployee}
+                  returnEvent={() => returnEvent()}
+                  baseRoute="employee"
+                  apiRoute="deletefuncionario"
+                  trigger={
+                    <div className="p-2 flex justify-center items-center rounded-md border-2 border-gray-100 cursor-pointer hover:bg-gray-100 transition-all">
+                      <i className="fa-solid fa-trash-can text-lg"></i>
+                    </div>
+                  }
+                />
               </div>
             </div>
             <div className="w-full flex justify-start px-6 2xl:py-8 xl:py-4">
@@ -66,7 +78,13 @@ const InfoEmployeeModal: FC<ObjEmployee> = ({ employee }) => {
                       {getFirstTwoNames(employee.name) || "Não informado"}
                     </p>
                     <div className="flex justify-center items-center 2xl:gap-3 xl:gap-1">
-                      <div className={`2xl:w-16 2xl:h-6 xl:w-12 xl:h-5 border-2 ${employee.active ? "border-green-500 text-green-500" : "border-red-500 text-red-500"} 2xl:rounded-md xl:rounded flex justify-center items-center 2xl:text-base xl:text-sm `}>
+                      <div
+                        className={`2xl:w-16 2xl:h-6 xl:w-12 xl:h-5 border-2 ${
+                          employee.active
+                            ? "border-green-500 text-green-500"
+                            : "border-red-500 text-red-500"
+                        } 2xl:rounded-md xl:rounded flex justify-center items-center 2xl:text-base xl:text-sm `}
+                      >
                         {employee.active ? "Sim" : "Não"}
                       </div>
                       <p className="w-1 h-1 bg-slate-400 rounded-full"></p>
@@ -294,7 +312,7 @@ const InfoEmployeeModal: FC<ObjEmployee> = ({ employee }) => {
                                   Departamento
                                 </p>
                                 <p className="text-xs text-gray-700">
-                                  {employee.departament?.name ||
+                                  {employee.department?.name ||
                                     "Sem informações"}
                                 </p>
                               </div>

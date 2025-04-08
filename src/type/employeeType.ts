@@ -1,6 +1,6 @@
 import { AccountOut } from "./accountType";
 import { BranchOut } from "./branchType";
-import { DepartamentOut } from "./departamentType";
+import { DepartmentOut } from "./departmentType";
 import { PositionOut } from "./positionType";
 
 export interface EmployeeOut {
@@ -13,7 +13,7 @@ export interface EmployeeOut {
   phone_contact: string;
   account: AccountOut
   branch?: BranchOut
-  departament?: DepartamentOut
+  department?: DepartmentOut
   position?: PositionOut
   gender?: string
   address?: string
@@ -27,13 +27,13 @@ export interface EmployeeOut {
 export interface EmployeeIn {
   name: string;
   date_of_birth: string;
-  date_of_hire?: string;
+  date_of_hire: string;
   cpf: string;
   phone: string;
   phone_contact: string;
   id_account: number | null
   id_branch: number | null
-  id_departament: number | null
+  id_department: number | null
   id_position: number | null
   gender?: string
   address?: string

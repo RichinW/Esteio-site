@@ -11,6 +11,8 @@ interface AddModalAccountProps {
 const AddModalAccount: FC<AddModalAccountProps> = ({ onAccountAdded }) => {
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [viewPassword, setViewPassword] = useState(false);
+  const [confirmViewPassword, setViewConfirmPassword] = useState(false);
   const [account, setAccounts] = useState<AccountIn>({
     username: "",
     email: "",
@@ -57,7 +59,7 @@ const AddModalAccount: FC<AddModalAccountProps> = ({ onAccountAdded }) => {
       });
       onAccountAdded();
       clearInputs();
-      toast.success(`${response.data.message}`);
+      toast.success("Usuario cadastrado com sucesso!");
       setShowModal(false);
       setLoading(false);
     } catch (err) {
@@ -73,6 +75,8 @@ const AddModalAccount: FC<AddModalAccountProps> = ({ onAccountAdded }) => {
       password: "",
       confirm_password: "",
     });
+    setViewConfirmPassword(false)
+    setViewPassword(false)
   };
 
   return (
@@ -90,7 +94,7 @@ const AddModalAccount: FC<AddModalAccountProps> = ({ onAccountAdded }) => {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
           <ToastContainer />
           <div className="rounded-lg w-5/12 h-5/6 bg-white flex flex-col justify-between px-6">
-            <div className="w-full flex justify-between items-center 2xl:h-20 2xl:min-h-20 text-3xl xl:text-2xl xl:h-16 xl:min-h-20 text-gray-600 border-b-2 border-gray-100">
+            <div className="w-full flex justify-between items-center 2xl:h-20 2xl:min-h-20 text-3xl xl:text-2xl xl:h-20 text-gray-600 border-b-2 border-gray-100">
               <div className="flex items-center justify-between gap-4">
                 <i className="fa-solid fa-book"></i>
                 <p className="font-medium">Cadastro de Usuários</p>
@@ -136,10 +140,16 @@ const AddModalAccount: FC<AddModalAccountProps> = ({ onAccountAdded }) => {
                       height="2xl:h-16 xl:h-12"
                       width="2xl:w-80 xl:w-52"
                       placeholder="Senha"
-                      type="password"
+                      type={viewPassword ? "text" : "password"}
                       input={account.password || ""}
                       setInput={handlePasswordChange}
                       fontSize="2xl:text-lg xl:text-base"
+                      icone={`${
+                        viewPassword
+                          ? "fa-solid fa-eye "
+                          : "fa-solid fa-eye-slash"
+                      } 2xl:text-2xl xl:text-xl`}
+                      onClick={() => setViewPassword(!viewPassword)}
                     />
                   </div>
                   <div className="flex flex-col gap-2">
@@ -147,16 +157,24 @@ const AddModalAccount: FC<AddModalAccountProps> = ({ onAccountAdded }) => {
                       height="2xl:h-16 xl:h-12"
                       width="2xl:w-80 xl:w-52"
                       placeholder="Confirmar Senha"
-                      type="password"
+                      type={confirmViewPassword ? "text" : "password"}
                       input={account.confirm_password || ""}
                       setInput={handleConfirmPassordChange}
+                      icone={`${
+                        confirmViewPassword
+                          ? "fa-solid fa-eye "
+                          : "fa-solid fa-eye-slash"
+                      } 2xl:text-2xl xl:text-xl`}
+                      onClick={() =>
+                        setViewConfirmPassword(!confirmViewPassword)
+                      }
                       fontSize="2xl:text-lg xl:text-base"
                     />
                   </div>
                 </div>
               </div>
             </div>
-            <div className="w-full 2xl:h-24 2xl:min-h-24 xl:h-20 xl:min-h-20 flex justify-end items-center p-2 border-t-2 border-gray-100 gap-4">
+            <div className="w-full 2xl:h-24 2xl:min-h-24 xl:h-20 flex justify-end items-center p-2 border-t-2 border-gray-100 gap-4">
               <input
                 className="border-none bg-blue-500 2xl:text-xl xl:text-base font-light flex justify-center items-center text-white rounded-lg 2xl:w-32 2xl:h-12 xl:w-24 xl:h-10 hover:bg-blue-600 transition-all cursor-pointer"
                 type="submit"
