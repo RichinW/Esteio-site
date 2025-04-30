@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import AddModalEmployee from "../components/addModalEmployee";
-import { EmployeeOut } from "@/type/employeeType";
+import { EmployeeOut } from "@/type/funcionarioType";
 import api, { verifyToken } from "../services/api";
 import { useRouter } from "next/navigation";
 import { toast, ToastContainer } from "react-toastify";

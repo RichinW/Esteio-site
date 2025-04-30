@@ -1,6 +1,6 @@
 import { FC, useState } from "react";
 import InputText from "./inputText";
-import { AccountIn } from "@/type/accountType";
+import { AccountIn } from "@/type/usuarioType";
 import api from "../services/api";
 import { toast, ToastContainer } from "react-toastify";
 

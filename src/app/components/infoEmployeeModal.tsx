@@ -1,4 +1,4 @@
-import { EmployeeOut } from "@/type/employeeType";
+import { EmployeeOut } from "@/type/funcionarioType";
 import { FC, useState } from "react";
 import { format } from "date-fns";
 import { enUS } from "date-fns/locale";

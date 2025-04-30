@@ -9,7 +9,6 @@ import MenuBorder from "./components/globais/menuBorder";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useEffect, useState } from "react";
-import { verifyToken } from "./services/api";
 import "@fontsource/rubik";
 
 const geistSans = Geist({
@@ -27,19 +26,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const pathname = usePathname();
   const [currentPathname, setCurrentPathname] = useState<string | null>(null);
-  const router = useRouter();
-
-  useEffect(() => {
-    if (pathname !== "/login/" && localStorage.getItem("authToken")) {
-      const checkToken = async () => {
-        await verifyToken(router.push);
-      };
-      checkToken();
-    }
-    setCurrentPathname(pathname);
-  }, [pathname]);
 
   const showMenu = currentPathname !== "/login/";
 

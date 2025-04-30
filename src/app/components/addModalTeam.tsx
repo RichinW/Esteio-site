@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from "react";
-import { TeamIn } from "@/type/teamType";
-import { EmployeeOut } from "@/type/employeeType";
+import { TeamIn } from "@/type/equipeType";
+import { EmployeeOut } from "@/type/funcionarioType";
 import SelectDefault from "./Select";
 import api from "../services/api";
 import { toast } from "react-toastify";

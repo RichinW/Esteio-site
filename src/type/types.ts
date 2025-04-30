@@ -1,3 +1,8 @@
+type Option = {
+  value: number;
+  label: string;
+};
+
 
 export interface InputTextProps {
   placeholder: string;
@@ -45,9 +50,16 @@ export interface FilterIn {
 export interface SelectDefaultProps {
   options: any[]
   placeholder?: string
-  value?: string | number | null
+  value?: string | number | null | Option | Option[] | number[]
   onChange: any
   width: string
   style?: string
   height: string
+  isMulti?: boolean
+}
+
+export interface ToggleButtonProps {
+  state: boolean
+  id: number
+  returnEvent: any
 }

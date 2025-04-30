@@ -1,15 +1,15 @@
 "use client";
 import { FC, useEffect, useState } from "react";
 import InputText from "./inputText";
-import { AccountOut } from "@/type/accountType";
-import { EmployeeIn } from "@/type/employeeType";
+import { AccountOut } from "@/type/usuarioType";
+import { EmployeeIn } from "@/type/funcionarioType";
 import SelectDefault from "./Select";
 import api from "../services/api";
 import { toast } from "react-toastify";
 import InputMask from "react-input-mask-next";
-import { BranchOut } from "@/type/branchType";
-import { PositionOut } from "@/type/positionType";
-import { DepartmentOut } from "@/type/departmentType";
+import { BranchOut } from "@/type/filialType";
+import { PositionOut } from "@/type/cargoType";
+import { DepartmentOut } from "@/type/setorType";
 
 interface Options {
   label: string;

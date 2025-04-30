@@ -1,17 +1,14 @@
-import { HighwayOut } from "./highwayType";
+import { TrechoResponse } from "./trechoType";
 
-export interface RegionalOut {
-  id: number;
-  name: string;
-  observation: string;
-  km_start: number;
-  km_end: number;
-  highways?: HighwayOut[];
+export interface RegionalResponse {
+  id: number
+  nome: string
+  trechos: TrechoResponse[]
+  ativo: boolean
 }
 
-export interface RegionalIn {
-  name: string;
-  observation: string;
-  km_start: number;
-  km_end: number;
+export interface RegionalRequest {
+  nome?: string
+  trechosIds: number[]
+  ativo?: boolean
 }

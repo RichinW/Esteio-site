@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { TeamOut } from "@/type/teamType";
+import { TeamOut } from "@/type/equipeType";
 import { PermissionOut } from "@/type/permissionType";
 import AddModalTeam from "../components/addModalTeam";
 import { useRouter } from "next/navigation";

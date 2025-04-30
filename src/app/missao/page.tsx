@@ -1,12 +1,13 @@
 "use client";
 import { useEffect, useState } from "react";
 import AddModalMission from "../components/addModalMission";
-import { MissionOut } from "@/type/missionType";
+import { MissionOut } from "@/type/rotaType";
 import api, { verifyToken } from "../services/api";
 import { useRouter } from "next/navigation";
 import { toast, ToastContainer } from "react-toastify";
 import DeleteNotificationModal from "../components/deleteNotificationModal";
 import InfoMissionModal from "../components/infoMissionModal";
+import ToggleButton from "../components/toggleButton";
 
 export default function Missao() {
   const [isLoading, setIsLoading] = useState(true);
@@ -186,7 +187,7 @@ export default function Missao() {
                     <i className="fa-solid fa-caret-down"></i>
                   </div>
                 </div>
-                <div className="w-[4%] flex items-center gap-2">
+                <div className="w-[10%] flex items-center justify-center gap-2">
                   <p>Ativa</p>
                   <div className="flex flex-col justify-center text-gray-300">
                     <i className="fa-solid fa-caret-up"></i>
@@ -243,8 +244,8 @@ export default function Missao() {
                             ? mission.regional.name
                             : "Sem regional"}
                         </div>
-                        <div className="w-[4%] flex items-center">
-                          {mission.active ? "Sim" : "Não"}
+                        <div className="w-[10%] flex items-center justify-center">
+                          <ToggleButton state={mission.active} id={mission.id} returnEvent={() => listMissions()}/>
                         </div>
 
                         <div

@@ -9,7 +9,8 @@ const SelectDefault: FC<SelectDefaultProps> = ({
   onChange,
   width,
   style,
-  height
+  height,
+  isMulti
 }) => {
   const selectedOption =
     options.find((option) => option.value === value) || null;
@@ -41,7 +42,7 @@ const SelectDefault: FC<SelectDefaultProps> = ({
     }),
   };
 
-  const customDefaut = {
+  const  customDefaut = {
     control: (base: any) => ({
       ...base,
       height: 52,
@@ -72,6 +73,7 @@ const SelectDefault: FC<SelectDefaultProps> = ({
     <div className={`w-${width} bg-gray-100`}>
       <Select
         options={options}
+        isMulti={isMulti ?? false}
         value={selectedOption} 
         onChange={(selected) => onChange(selected)}
         styles={style === 'style' ? customStyle : customDefaut}

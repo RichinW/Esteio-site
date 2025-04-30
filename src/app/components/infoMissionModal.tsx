@@ -1,9 +1,9 @@
 import { FC, useState } from "react";
 import { format } from "date-fns";
 import { enUS } from "date-fns/locale";
-import { MissionOut } from "@/type/missionType";
+import { MissionOut } from "@/type/rotaType";
 import { MapContainer, TileLayer, useMap, Marker, Popup } from "react-leaflet";
-import MapClientOnly from "./MapModal";
+import MapClientOnly from "./mapModal";
 import DeleteNotificationModal from "./deleteNotificationModal";
 
 interface ObjMission {

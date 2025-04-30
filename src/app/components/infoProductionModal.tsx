@@ -1,6 +1,6 @@
 import { FC, useRef, useState } from "react";
 import { format } from "date-fns";
-import { ProductionOut } from "@/type/productionType";
+import { ProductionOut } from "@/type/producaoType";
 import ButtonDefault from "./buttonDefault";
 import api from "../services/api";
 import { toast } from "react-toastify";
@@ -21,7 +21,7 @@ const InfoProductionModal: FC<ObjProduction> = ({
   const [checking, setChecking] = useState(true);
   const inputRef = useRef<HTMLInputElement>(null);
   const [currentId, setCurrentId] = useState(currentProductionId);
-
+  const [isLoading, setIsLoading] = useState(false)
   const currentIndex = productions.findIndex((p) => p.id === currentId);
   const [editMode, setEditMode] = useState(false);
   const production = productions[currentIndex];
@@ -32,6 +32,7 @@ const InfoProductionModal: FC<ObjProduction> = ({
 
   async function alterStateVerifiation() {
     try {
+      setIsLoading(true)
       const response = await api.put(
         `/production/editarproducao/alterarverificacao/${currentId}`,
         {
@@ -43,6 +44,7 @@ const InfoProductionModal: FC<ObjProduction> = ({
       toast.success(response.data.message);
       setShowModal(false);
       setChecking(false);
+      setIsLoading(false)
       returnEvent();
     } catch (err) {
       toast.error("Erro ao adicionar verificação!");
@@ -278,7 +280,7 @@ const InfoProductionModal: FC<ObjProduction> = ({
                         <div className="flex flex-col font-semibold">
                           <p className="text-xs text-gray-400">Km Final</p>
                           <p className="text-xs text-gray-700">
-                            {formatKM(production.km_start)}
+                            {formatKM(production.km_end)}
                           </p>
                         </div>
                       </div>
@@ -320,7 +322,7 @@ const InfoProductionModal: FC<ObjProduction> = ({
                         bgColor="bg-blue-500"
                         hover="hover:bg-blue-600"
                         onClick={() => alterStateVerifiation()}
-                        disabled={amount === production.verified_amount}
+                        disabled={amount === production.verified_amount || isLoading}
                         width="xl:w-24"
                         height="xl:h-9"
                         fontSize="xl:text-sm text-white"

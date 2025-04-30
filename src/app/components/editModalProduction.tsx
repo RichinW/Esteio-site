@@ -1,6 +1,6 @@
 import { FC, useState } from "react";
 import InputText from "./inputText";
-import { ProductionOut, EditModalProductionProps } from "@/type/productionType";
+import { ProductionOut, EditModalProductionProps } from "@/type/producaoType";
 import { data } from "react-router-dom";
 
 const EditModalProduction: FC<EditModalProductionProps> = ({

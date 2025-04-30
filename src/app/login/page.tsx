@@ -2,7 +2,7 @@
 import InputText from "../components/inputText";
 import { useState } from "react";
 import ButtonDefault from "../components/buttonDefault";
-import api, { setAuthToken, clearAuthToken } from "../services/api";
+import api from "../services/api";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/navigation";
 import axios from "axios";
@@ -21,10 +21,11 @@ export default function Login() {
       const body = {
         username: username,
         password: password,
+        realm: "dev_esteio_maubertec_rep"
       };
 
       try {
-        const response = await api.post("/account/login", body);
+        const response = await api.post("/login", body);
         if (response.status === 200) {
           router.push("/producao");
         } else {

@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { AccountOut } from "@/type/accountType";
+import { AccountOut } from "@/type/usuarioType";
 import { PermissionOut } from "@/type/permissionType";
 import AddModalAccount from "../components/addModalAccount";
 import api, { verifyToken, getMe } from "../services/api";
